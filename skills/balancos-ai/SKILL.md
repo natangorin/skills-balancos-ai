@@ -90,6 +90,8 @@ Três fatos que mudam toda leitura:
   sinalize, sem interpretar.
 - **Reapresentação**: dois documentos do mesmo tipo e ano (`v2`) são versões. A base já
   escolheu; você não precisa.
+- **`exercicio` igual ao ano corrente** com `data_referencia` em junho ou setembro é ano
+  fiscal não-calendário, não erro. Compare pela `data_referencia` e diga a data.
 - **`porte`**: classificação cadastral ("Demais", "ME"), não tamanho econômico.
 - **Setor**: nome da seção CNAE ("Eletricidade e Gás", "Indústrias de Transformação",
   "Atividades Financeiras"), com rótulos herdados em algumas empresas ("Energia

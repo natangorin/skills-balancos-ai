@@ -22,8 +22,11 @@ consolidado, operacional ou holding) e uma resposta direta por pergunta feita ("
 1. Resolva cada empresa com `buscar_empresas` (um termo curto por empresa). Liste o que
    escolheu e o que descartou. Se o pedido for "pares do setor" ou "concorrentes" sem
    nomes, obtenha a lista com `ranking_empresas` pelo `setor` (e `uf`, se fizer sentido)
-   da empresa-alvo, tire holdings e linhas com receita zero ou irrisória, e diga quantas
-   empresas a base tem naquele setor.
+   da empresa-alvo (os dois rótulos, se houver herdado), tire holdings e linhas com
+   receita zero ou irrisória, filtre pelo `cnae_principal` da ficha quando o pedido for
+   um subsetor (geração, siderurgia) e corte por escala entre um terço e três vezes o
+   ativo da empresa-alvo, dizendo o corte ao leitor. Diga quantas empresas a base
+   devolveu e que o teto é 50 por chamada.
 2. `analisar_empresa` para cada uma, em paralelo.
 3. Escolha o exercício: o mais recente que **todas** têm. Se uma não tem, use o mais
    recente comum e mostre, em linha separada, o último ano de cada uma. Nunca misture anos
