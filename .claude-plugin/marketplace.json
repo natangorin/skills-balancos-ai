@@ -1,0 +1,18 @@
+{
+  "name": "balancos-ai",
+  "owner": {
+    "name": "Balanços.AI",
+    "email": "contato@balancos.ai"
+  },
+  "plugins": [
+    {
+      "name": "balancos-ai",
+      "source": "./",
+      "description": "Skills para usar o MCP do Balanços.AI: investigar empresas, comparar, due diligence financeira, originação de M&A e leitura de publicações. Conecta o MCP automaticamente (login OAuth).",
+      "version": "0.1.0",
+      "homepage": "https://balancos.ai/mcp",
+      "license": "MIT",
+      "keywords": ["balancos", "empresas", "brasil", "mcp", "financeiro"]
+    }
+  ]
+}

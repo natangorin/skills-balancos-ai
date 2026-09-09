@@ -1,0 +1,13 @@
+{
+  "name": "balancos-ai",
+  "description": "Skills para investigar empresas brasileiras, comparar concorrentes, fazer due diligence financeira, originar M&A e ler publicações com o MCP do Balanços.AI.",
+  "version": "0.1.0",
+  "author": {
+    "name": "Balanços.AI",
+    "email": "contato@balancos.ai"
+  },
+  "homepage": "https://balancos.ai/mcp",
+  "repository": "https://github.com/natangorin/skills-balancos-ai",
+  "license": "MIT",
+  "keywords": ["balancos", "dre", "balanco-patrimonial", "empresas", "brasil", "cnpj", "mcp", "due-diligence", "m&a"]
+}
