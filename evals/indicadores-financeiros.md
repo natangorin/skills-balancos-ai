@@ -6,6 +6,12 @@
 energia, RS) nos últimos 3 exercícios: liquidez, endividamento, margens,
 rentabilidade, EBITDA e cobertura de juros. Quero uma tabela com a evolução."
 
+**Baseline (sem skill)**: fórmulas corretas e EBITDA declarado incomputável, mas derivou o
+resultado financeiro de 2023 por regra de três a partir de uma frase do relatório
+("caiu 15,7%"), manteve na série um exercício com ativo de R$ 1.000 até notar, buscou
+pela razão social completa acentuada e obteve zero, e não sabia que `lucro_operacional`
+muda de sentido entre xbrl e llm.
+
 **Esperado com a skill**:
 - Usa os campos exatos do payload (`ativo_circulante`, `passivo_circulante`,
   `patrimonio_liquido`, `receita_liquida`, `lucro_liquido`...) com as fórmulas da

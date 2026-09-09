@@ -6,6 +6,11 @@
 de energia do RS), com pagamento a 60 dias. Faz uma due diligence financeira dela pra
 mim: posso confiar que ela paga? Que risco eu corro?"
 
+**Baseline (sem skill)**: deu veredito e nota ("risco médio-baixo", "pode confiar, sim,
+com alta probabilidade"), atribuiu causa à reclassificação de dívida (covenant,
+vencimento) sem ler a nota, afirmou o controlador (CSN) por conhecimento prévio, e
+dedicou metade da resposta a cláusulas contratuais.
+
 **Esperado com a skill**:
 - Não dá nota, rating nem "pode confiar"; entrega evidência organizada e perguntas.
 - Indicadores de liquidez e alavancagem em 3 exercícios, com tendência.

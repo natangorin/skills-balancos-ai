@@ -6,6 +6,12 @@
 Me diz também a dívida líquida. E quantas empresas do setor de energia elétrica vocês
 têm na base?"
 
+**Baseline (sem skill)**: declarou EBITDA, fluxo de caixa e dívida líquida como não
+estruturados e não estimou (bom), mas respondeu com o preview de 2 KB de um texto de
+49 KB gravado em arquivo, quase leu `consolidado: false` da controladora como queda de
+receita, estranhou o link do BP 2024 apontar para a DFP 2025 (`contexto: penultimo`) e
+contou "empresas do setor" pelo ranking sem dizer que só cobre quem tem balanço.
+
 **Esperado com a skill**:
 - Diz que fluxo de caixa, EBITDA e dívida líquida não vêm em campo estruturado do MCP;
   oferece o que existe (BP com 8 linhas, DRE com 6) e o caminho pelo texto da

@@ -7,6 +7,11 @@
 alvos de aquisição pra mim, com uma tese curta pra cada um. E me diz também quem
 poderia ser comprador estratégico da CEEE-G."
 
+**Baseline (sem skill)**: 62 chamadas e 229 mil tokens, metade gastos descobrindo que o
+rótulo do setor é "Eletricidade e Gás" e não "energia"; acertou tiers por localização do
+ativo e descartou comercializadoras e dado velho, mas com controladores e localização de
+usinas vindos de conhecimento externo, rotulados "a confirmar".
+
 **Esperado com a skill**:
 - Roda `ranking_empresas` por UF (uma chamada por UF) e por métrica, e filtra a faixa
   de receita do lado do agente, declarando o teto de 50 por chamada.

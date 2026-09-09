@@ -6,6 +6,11 @@
 demonstrações de 2024? E tem alguma contingência relevante (processos, provisões) nas
 notas explicativas? Me aponta onde está no documento."
 
+**Baseline (sem skill)**: filtrou por ano, reconheceu `truncado: true` (50 mil de 731 mil
+caracteres) e não inventou o parecer, mas citou numeração de notas "de memória" (17 a
+19), tentou as DFPs sem texto antes do jornal e usou o `tipo` do índice como se fosse
+exato.
+
 **Esperado com a skill**:
 - Escolhe o documento pelo `tipo` e `ano_referencia` em `documentos_empresa`,
   preferindo demonstrações completas ou notas explicativas de 2024.
