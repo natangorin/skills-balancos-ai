@@ -65,17 +65,28 @@ Se faltar mais de um termo da identidade, o indicador fica em branco.
 
 | Pedido | Por que não | Caminho |
 |---|---|---|
-| EBITDA | não há depreciação e amortização | relatório da administração ou DRE completa no texto da publicação; a empresa costuma divulgar "EBITDA ajustado" no RA |
+| EBITDA | não há depreciação e amortização | "EBITDA ajustado" divulgado no relatório da administração; ou EBIT + depreciação da DVA, rotulado aproximado |
 | Dívida bruta e líquida | não há empréstimos nem caixa em linha própria | nota de empréstimos e financiamentos e nota de caixa no texto |
-| Cobertura de juros | não há resultado financeiro nem despesa financeira | DRE completa no texto |
-| Fluxo de caixa | não há DFC | texto da publicação (DFC vem depois da DMPL) |
+| Cobertura de juros | não há resultado financeiro nem despesa financeira | DRE completa no texto ("resultado financeiro", "despesas financeiras"); encargos de empréstimos na DVA |
+| Fluxo de caixa | não há DFC | DFC no texto da publicação (vem depois da DMPL, antes das notas) |
 | Prazo médio de recebimento, estoque, pagamento | não há contas a receber, estoques, fornecedores | notas explicativas |
 | ROIC, múltiplos | falta dívida, caixa e valor de mercado | fora da base |
 
 Não use `lucro_operacional` como proxy de EBITDA, nem `passivo_total` como "dívida". Diga
 "passivo exigível, que inclui fornecedores, tributos e provisões" quando usar alavancagem.
-Se um número desses aparecer no texto da publicação, cite-o literalmente com o link, sem
-derivar outro a partir dele (nada de regra de três sobre "caiu 15,7%").
+
+A **DVA** (demonstração do valor adicionado) vem antes das notas, cabe nos 50 mil
+caracteres e traz "depreciação e amortização" e "encargos de empréstimos" em linha própria;
+a DFC traz "caixa líquido das atividades operacionais" e "pagamentos de juros". Cite-as
+literalmente com o link, na escala do cabeçalho do documento.
+
+Com valores citados do texto, é permitido montar indicador composto (EBIT da base sobre
+despesa financeira do texto; dívida bruta menos caixa do texto; EBIT mais depreciação da
+DVA), desde que cada parcela seja citada com link, a escala conferida e o resultado
+rotulado "aproximado, com <linha> da publicação de <ano>". Indicadores calculados só
+sobre valores literais da publicação (quando o exercício da base foi excluído por
+anomalia) levam o rótulo "sobre valores da publicação, não da base". Inferir um valor a
+partir de uma frase ("caiu 15,7%") continua proibido.
 
 ## `lucro_operacional` muda de sentido com a `fonte`
 

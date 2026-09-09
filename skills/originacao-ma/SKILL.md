@@ -27,20 +27,26 @@ não tem" e uma "de conhecimento geral, não confirmado na base".
 2. Para cada UF, `ranking_empresas` com `metrica="receita"` e depois `metrica="ativo"`,
    `setor` pelo rótulo certo, `limite=50`. Ativo pega quem ficou fora por receita
    (holding, ano sem DRE). Junte e dedupe pelo slug. Se o setor tiver rótulos herdados
-   ("Energia Elétrica"), rode com os dois e junte.
+   ("Energia Elétrica"), rode o herdado por receita em cada UF; se voltar alguém, rode
+   por ativo também.
 3. Corte de receita do lado do agente com `receita_em_reais` e `exercicio` de cada linha.
-   Descarte receita zero ou irrisória (holding, extração parcial) e exercícios anteriores
-   a 3 anos atrás vão para "dado defasado", nunca para a longlist principal.
-4. `ficha_empresa` (ou `analisar_empresa` só para a shortlist) para CNAE, situação
-   cadastral, município e anos disponíveis. Tire "Baixada" e "Inapta"; separe por CNAE o
-   que passou no corte só por volume (comercializadoras, tradings, holdings).
+   Descarte receita zero ou irrisória (holding, extração parcial). Exercício anterior a
+   (ano atual − 3) vai para "dado defasado", nunca para a longlist principal; em 2026,
+   2023 ainda entra. Ano fiscal não-calendário (`exercicio` igual ao ano corrente, data
+   de referência em junho) é o mais recente da empresa; diga a data.
+4. `analisar_empresa` para quem passou no corte (a tabela precisa de BP e DRE; `ficha`
+   não basta), até uns 15; acima disso, `ficha_empresa` primeiro e `analisar` só na
+   shortlist. Tire "Baixada" e "Inapta"; separe por CNAE o que passou no corte só por
+   volume (comercializadoras, tradings, holdings). Orçamento: o mapa inteiro cabe em
+   30 a 40 chamadas; passou disso, pare de ampliar o universo e feche a lista.
 5. Sinais para a tese, com a skill indicadores-financeiros: prejuízo recorrente, PL em
    queda, liquidez apertada e alavancagem alta apontam candidato a venda ou
    reestruturação; margem alta e PL crescente apontam ativo caro. Uma frase por empresa,
    só com o que os números mostram.
-6. Complete o universo com `buscar_empresas` por nomes que você conhece do setor, e diga
-   que a base não cobre todo o setor. Empresa citada e não encontrada entra numa lista
-   "fora da base".
+6. Complete o universo com `buscar_empresas` por até dez nomes que você conhece do
+   setor (razão social curta; nome fantasia de cooperativa costuma não casar), e diga que
+   a base não cobre todo o setor. Empresa citada e não encontrada entra numa lista "fora
+   da base".
 
 ## Passos para compradores
 
@@ -56,8 +62,9 @@ não tem" e uma "de conhecimento geral, não confirmado na base".
 
 ## Regras
 
-- UF é a da sede. Usina, planta ou linha pode ficar em outro estado; se classificar por
-  localização do ativo, diga que veio de conhecimento seu.
+- UF é a da sede. Usina, planta ou linha pode ficar em outro estado. Mantenha na
+  longlist pela sede e acrescente uma coluna "ativo físico" preenchida por conhecimento
+  geral, rotulada como tal; o leitor decide se conta.
 - Crescimento é de ativo total, e percentuais de milhares por cento vêm de bases
   minúsculas: filtre `ativo_base`.
 - Não há filtro por faixa de receita, porte econômico, controle acionário nem paginação:

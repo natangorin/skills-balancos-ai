@@ -30,7 +30,9 @@ Um relatório de evidências, não um parecer. Seções fixas, nesta ordem:
    continuidade operacional. Citação curta e link. Item não encontrado no texto disponível
    fica marcado "não localizado no trecho disponível", com o link.
 6. **O que a base não tem** para esta decisão: fluxo de caixa, dívida líquida, caixa,
-   prazo médio de pagamento, protestos, rating, quadro societário, dado intra-ano.
+   prazo médio de pagamento, protestos, rating, quadro societário, dado intra-ano. Se o
+   último exercício tem mais de seis meses, diga quantos e inclua na seção 7 o pedido de
+   balancete ou ITR recente.
 7. **Perguntas à contraparte** derivadas dos itens 4, 5 e 6: uma pergunta por lacuna.
 8. **Modo** (fornecedor e cliente, aquisição, investimento) ajusta o foco, ver abaixo.
 
@@ -47,7 +49,9 @@ os números e o texto mostram e o que falta perguntar.
 4. Leia texto: no índice de documentos, escolha a publicação mais recente com texto
    (jornal antes de DFP) e siga a skill ler-publicacao, com o roteiro em
    [references/roteiro-notas.md](references/roteiro-notas.md). Se o texto vier gravado em
-   arquivo, leia o arquivo inteiro. Se vier truncado, diga o que ficou fora.
+   arquivo, leia o arquivo inteiro. Se vier truncado, diga o que ficou fora e leia
+   também a publicação do ano anterior: um item cortado neste ano (garantia da
+   controladora, covenant) pode estar inteiro no anterior, e aí você diz de que ano é.
 5. Escreva as seções 6 e 7 a partir do que ficou em aberto.
 6. Escreva o relatório.
 
@@ -67,7 +71,12 @@ os números e o texto mostram e o que falta perguntar.
 
 - Causa de uma variação só com trecho do texto. Sem texto: "reclassificação de R$ X do
   não circulante para o circulante em 2023; causa não localizada no trecho disponível".
-- Controlador, grupo, notícia, privatização, leilão: conhecimento seu, rotulado, ou fora.
+- Controlador, grupo, notícia, privatização, leilão: se está no texto da publicação
+  (nota 1, relatório da administração), cite "segundo a publicação"; se não, é
+  conhecimento seu, rotulado, ou fica fora.
+- Linhas da DRE, DFC e DVA publicadas são texto citável (resultado financeiro, caixa
+  gerado, pagamentos de juros). Dívida bruta menos caixa, os dois citados, pode ser
+  apresentada como "dívida líquida aproximada, segundo a publicação".
 - Passivo exigível não é dívida financeira; escreva "exigível".
 - Não converta indicador em veredito por nenhuma escala própria.
 - Não redija cláusulas contratuais.

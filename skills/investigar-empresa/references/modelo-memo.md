@@ -20,12 +20,13 @@ líquido R$ <x> mi.
 | Patrimônio líquido (R$ mi) | | | | | |
 | Receita líquida (R$ mi) | | | | | |
 | Lucro líquido (R$ mi) | | | | | |
-| Var. receita | | | | | |
+| Var. receita (holding: var. ativo, PL e lucro) | | | | | |
 <Exercício <ano> excluído: <motivo>, ver <link>.>
 
 **Rentabilidade e estrutura de capital (<ano>).** Margem líquida <x>%, ROE <x>%, liquidez
 corrente <x>x, passivo exigível / ativo <x>%, <x>% do exigível no curto prazo. <Uma
-frase de leitura.>
+frase de leitura.> <Holding: só ROE, exigível / PL e tendência de PL e lucro; "margens,
+giro e liquidez não descrevem a operação, que está nas controladas".>
 
 **Publicações.** <N> na base; mais recentes: <tipo>, <data>, <link>; ...
 

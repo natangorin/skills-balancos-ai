@@ -56,6 +56,9 @@ Resultados", "Notas Explicativas", "Ata de AGO", "Ata de AGE", "Press Release",
 
 ## texto_documento(documento_id)
 
+Resposta grande: clientes como o Claude Code gravam o resultado em arquivo e mostram só um
+preview de 2 mil caracteres. Leia o arquivo inteiro.
+
 ```
 documento: id, titulo, tipo, publicado_em, link
 texto (até 50.000 caracteres), truncado (bool), tamanho_total_chars, aviso

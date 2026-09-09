@@ -33,7 +33,10 @@ consolidado, operacional ou holding) e uma resposta direta por pergunta feita ("
    não somam nem competem: diga que são andares da mesma operação.
 5. Calcule com a skill indicadores-financeiros. Campo `null` só se deriva por identidade
    contábil, com nota. Exercício com escala trocada ou anomalia sai da comparação com
-   nota e link; não se corrige.
+   nota e link; não se corrige. Se o texto da publicação tiver os valores literais, eles
+   entram na coluna com a nota "sobre valores da publicação, não da base", e os
+   indicadores calculados sobre eles levam a mesma nota. Se a anomalia atinge a série
+   inteira da empresa, diga isso.
 6. Monte a tabela e responda cada pergunta com a lente explícita.
 
 ## Tabela
@@ -62,8 +65,12 @@ campo não existe ou o exercício foi excluído.
 - Margem de holding é artefato de equivalência patrimonial: mostre com asterisco, não
   use para "mais rentável".
 - Fontes diferentes na mesma tabela (xbrl e llm) ficam visíveis na linha "Natureza".
-- Estrutura societária (quem controla quem) que não veio da base é conhecimento seu:
-  rotule. Se o MCP do cnpj.ai estiver disponível, confirme lá.
+- Estrutura societária (quem controla quem): se o texto da publicação diz ("sua
+  controladora, X"), cite; se não, é conhecimento seu, rotulado. Se o MCP do cnpj.ai
+  estiver disponível, confirme lá.
+- Controladora com CNAE industrial mas receita pequena diante do ativo e lucro
+  operacional acima do bruto (Gerdau S.A.) recebe o mesmo tratamento de holding nas
+  margens.
 - Opção "em CSV": as mesmas linhas, uma empresa por coluna, separador vírgula, sem
   unidade nos números e com o exercício em coluna própria.
 

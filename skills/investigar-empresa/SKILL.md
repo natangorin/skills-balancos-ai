@@ -20,9 +20,12 @@ que é interpretação:
 2. **Natureza do dado**: se é entidade operacional ou holding, e por quê (CNAE, receita
    diante do ativo). Fonte por exercício (xbrl ou llm). Anos disponíveis de BP e DRE.
 3. **Tamanho**: ativo total, patrimônio líquido, receita líquida e lucro líquido do último
-   exercício, em R$ mi ou bi, com o ano.
+   exercício, em R$ mi ou bi, com o ano. Em holding, acrescente o que o relatório da
+   administração diz do grupo (EBITDA, lucro, dívida líquida consolidados), citado e
+   rotulado "segundo a companhia".
 4. **Trajetória**: tabela de 3 a 5 exercícios com ativo, PL, receita líquida, lucro líquido
-   e a variação anual. Anomalias excluídas e declaradas.
+   e a variação anual. Em holding, variação de ativo, PL e lucro no lugar de receita.
+   Anomalias excluídas e declaradas; anomalia fora da janela vai numa linha da seção 7.
 5. **Rentabilidade e estrutura de capital**: margens, ROE, liquidez corrente,
    endividamento e composição, com a leitura da skill indicadores-financeiros.
 6. **Publicações**: as 3 a 5 mais recentes com tipo, data e link; total no índice.
@@ -53,9 +56,10 @@ que é interpretação:
 
 ## Regras
 
-- Tudo que não veio da resposta do MCP ou do texto lido é conhecimento seu: história do
-  grupo, controlador, eventos de mercado, motivo de uma queda. Vai em frase separada,
-  rotulada "de conhecimento geral, não confirmado na base", ou fica de fora.
+- Três proveniências (skill balancos-ai): base, texto citado, conhecimento geral. Tudo
+  que não veio do MCP nem do texto lido é conhecimento seu: história do grupo,
+  controlador, eventos de mercado, motivo de uma queda. Vai em frase separada, rotulada
+  "de conhecimento geral, não confirmado na base", ou fica de fora.
 - Não atribua causa a variações (covenant, aquisição, crise) sem trecho do texto.
 - Não escreva "em milhares". Valores já estão em reais.
 - Se o MCP do cnpj.ai estiver disponível, a seção 1 pode ganhar sócios e vínculos; se
