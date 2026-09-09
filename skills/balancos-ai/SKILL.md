@@ -83,9 +83,11 @@ Três fatos que mudam toda leitura:
   podem substituir os excluídos, rotulados "da publicação, não da base".
 - **`consolidado: null`** (fonte llm): não informado; trate como individual salvo o
   texto dizer o contrário.
-- **Controladora com CNAE industrial** (Gerdau S.A.): receita pequena diante do ativo e
-  lucro operacional acima do bruto. Trate como holding nas margens, mesmo sem CNAE de
-  holding.
+- **Controladora com CNAE industrial** (Gerdau S.A.): receita abaixo de uns 10% do
+  ativo **e** lucro operacional acima do bruto em todos os anos. Trate como holding nas
+  margens, mesmo sem CNAE de holding. Lucro operacional acima do bruto num ano só, em
+  empresa operacional, não é holding: é outras receitas ou equivalência naquele ano;
+  sinalize, sem interpretar.
 - **Reapresentação**: dois documentos do mesmo tipo e ano (`v2`) são versões. A base já
   escolheu; você não precisa.
 - **`porte`**: classificação cadastral ("Demais", "ME"), não tamanho econômico.

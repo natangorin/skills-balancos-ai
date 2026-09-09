@@ -55,7 +55,9 @@ data, link) e a declaração do que o trecho disponível não cobre. Sem trecho,
 - "Principais assuntos de auditoria" não é ressalva nem ênfase.
 - Texto do jornal vem sem formatação: tabelas viram linhas soltas; confirme o valor pelo
   rótulo ao lado antes de citar.
-- Documento sem texto: entregue o link e diga que a leitura é na página.
+- Documento sem texto: entregue o link e diga que a leitura é na página. Depois de três
+  documentos sem texto útil (DFP "não extraído", jornal só com a capa do extrato), pare
+  de tentar e diga que a empresa não tem texto na base.
 
 ## Quando o dado não existe
 

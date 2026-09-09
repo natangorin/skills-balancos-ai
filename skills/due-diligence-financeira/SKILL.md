@@ -40,6 +40,10 @@ Sem nota, sem semáforo, sem "risco baixo/médio/alto", sem probabilidade de pag
 "pode confiar". A decisão e a estrutura de garantias são do leitor; a skill entrega o que
 os números e o texto mostram e o que falta perguntar.
 
+Pergunta direta cujo dado não existe ("quanto de dívida ela tem?") ganha resposta direta
+na seção 6: o que a base tem que se aproxima (passivo exigível, como teto, não estimativa),
+o que o texto diz, e o que falta. Não a deixe implícita entre as seções.
+
 ## Passos
 
 1. `buscar_empresas`; confirme a contraparte pelo CNPJ e liste homônimos.
