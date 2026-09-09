@@ -79,6 +79,18 @@ Qualquer cliente que aceite servidores MCP remotos por HTTP conecta em
 - Não emitem nota de crédito, rating ou recomendação de investimento. Entregam
   evidência organizada e perguntas a fazer.
 
+## Limitações conhecidas
+
+As skills são escritas em cima do que o MCP entrega hoje, e dizem isso ao usuário:
+
+- Balanço com 8 linhas e DRE com 6, sempre da entidade individual (sem consolidado).
+- Texto de publicação limitado aos primeiros 50 mil caracteres; parecer do auditor e
+  notas explicativas costumam ficar fora, e a skill aponta o link do documento.
+- Ranking com até 50 empresas por chamada, sem filtro por faixa de receita.
+- Rótulo de setor por seção CNAE, com alguns rótulos herdados.
+
+Quando o MCP ganhar essas capacidades, as skills mudam junto.
+
 ## Desenvolvimento
 
 ```bash
