@@ -79,6 +79,19 @@ Qualquer cliente que aceite servidores MCP remotos por HTTP conecta em
 - Não emitem nota de crédito, rating ou recomendação de investimento. Entregam
   evidência organizada e perguntas a fazer.
 
+## Atualizações
+
+Nenhum caminho atualiza sozinho por padrão. Para pegar a versão mais nova das skills:
+
+| Instalou por | Como atualizar |
+|---|---|
+| `npx skills add` | `npx skills update` (todas) ou `npx skills update balancos-ai` (uma). A instalação padrão é por symlink para uma cópia canônica, então o comando atualiza todos os agentes de uma vez. |
+| Plugin do Claude Code | `/plugin` › Marketplaces › `balancos-ai` › Update, ou `claude plugin marketplace update balancos-ai` seguido de `/plugin` › Update. No mesmo menu dá para ligar a atualização automática desse marketplace (desligada por padrão para marketplaces de terceiros); com ela ligada, o Claude Code puxa cada novo commit em segundo plano ao iniciar. |
+| Zip no Claude.ai | Baixar o zip novo e subir de novo em Configurações › Capacidades › Skills, substituindo o anterior. |
+
+Cada mudança relevante vira uma release no GitHub com o que mudou por skill; siga o repositório
+para receber aviso.
+
 ## Limitações conhecidas
 
 As skills são escritas em cima do que o MCP entrega hoje, e dizem isso ao usuário:

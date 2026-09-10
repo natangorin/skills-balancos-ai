@@ -5,6 +5,7 @@ Reprova quando:
 - SKILL.md sem frontmatter, sem `name` ou sem `description`;
 - `name` diferente do nome da pasta, fora de [a-z0-9-] ou com hífen duplo;
 - `description` vazia ou acima de 1024 caracteres;
+- valor do frontmatter com ": " sem aspas (YAML inválido; `npx skills add` pula a skill);
 - SKILL.md acima de 500 linhas;
 - nome com cara de tool citado em crase (`buscar_x`, `ranking_y`...) que não existe no MCP;
 - link http(s) para domínio fora da lista permitida;
@@ -86,6 +87,12 @@ def checar_skill(pasta: Path) -> list[str]:
         erros.append(f"{pasta.name}: frontmatter sem `description`")
     elif len(desc) > 1024:
         erros.append(f"{pasta.name}: `description` com {len(desc)} caracteres (máx. 1024)")
+    for chave, valor in fm.items():
+        if ": " in valor and not valor.startswith(('"', "'")):
+            erros.append(
+                f"{pasta.name}: `{chave}` tem ': ' sem aspas — YAML inválido, "
+                "instaladores pulam a skill"
+            )
     linhas = texto.count("\n") + 1
     if linhas > 500:
         erros.append(f"{pasta.name}: SKILL.md com {linhas} linhas (máx. 500)")
