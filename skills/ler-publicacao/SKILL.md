@@ -1,6 +1,6 @@
 ---
 name: ler-publicacao
-description: Use quando pedirem o conteúdo de uma publicação legal de empresa brasileira com o MCP do Balanços.AI conectado: "o que diz a nota explicativa", "resume a ata", "tem ressalva do auditor", "o que o relatório da administração fala", "quanto de dívida aparece nas notas", "eventos subsequentes", ou qualquer pergunta que exija ler o texto de um documento.
+description: Use quando pedirem o conteúdo de uma publicação legal de empresa brasileira com o MCP do Balanços.AI conectado, como "o que diz a nota explicativa", "resume a ata", "tem ressalva do auditor", "o que o relatório da administração fala", "quanto de dívida aparece nas notas", "eventos subsequentes", ou qualquer pergunta que exija ler o texto de um documento.
 license: MIT
 compatibility: Requer o MCP do Balanços.AI conectado. Assume a skill balancos-ai.
 metadata:

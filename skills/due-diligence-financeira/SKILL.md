@@ -1,6 +1,6 @@
 ---
 name: due-diligence-financeira
-description: Use quando pedirem para avaliar o risco financeiro de uma empresa brasileira como contraparte, com o MCP do Balanços.AI conectado: homologar fornecedor, vender a prazo para um cliente, analisar alvo de aquisição ou de investimento, "posso confiar que paga", "que risco eu corro", "vale a pena comprar".
+description: Use quando pedirem para avaliar o risco financeiro de uma empresa brasileira como contraparte, com o MCP do Balanços.AI conectado. Cobre homologar fornecedor, vender a prazo para um cliente, analisar alvo de aquisição ou de investimento, "posso confiar que paga", "que risco eu corro", "vale a pena comprar".
 license: MIT
 compatibility: Requer o MCP do Balanços.AI conectado. Assume as skills balancos-ai, indicadores-financeiros e ler-publicacao.
 metadata:
