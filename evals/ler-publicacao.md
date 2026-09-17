@@ -48,6 +48,22 @@ tipo, firma e data; PAA não é ressalva.
 
 ## Resultados registrados
 
+- 2026-09-17, cenários 1, 3 e 4 com a skill 0.3 (MCP 0.3.0, texto integral), todos
+  passaram.
+  - 1 (parecer e contingências): seis chamadas, "ressalva" e "ênfase" sem hit no parecer,
+    "opini" achou a opinião da PwC no fim (posição 705 mil de 731 mil) e separou o PAA;
+    "conting" e "provis" acharam a Nota 19 com valores e posições. Achados: o agente
+    pediu um pedaço sem termo antes da busca (a skill passou a dizer para não pedir);
+    22 ocorrências viraram 18 trechos por colapso de vizinhas (registrado); os trechos
+    não trazem a escala (a skill manda confirmar com `termo="milhares de reais"`).
+  - 3 (resumo do relatório da administração): duas chamadas de 100 mil; o relatório
+    termina em 113 mil caracteres, antes de "BALANÇO PATRIMONIAL"; resumo com o que ficou
+    fora declarado. Achados: `tamanho=200000` cobriria numa chamada (registrado); o
+    arquivo gravado pelo Claude Code é JSON de uma linha e a paginação por linha do Read
+    não divide o pedaço (registrado).
+  - 4 (eventos subsequentes): quatro chamadas, `termo="subsequente"` achou a Nota 32 na
+    posição 691 mil e o entorno de 20 mil trouxe a nota inteira. Achado: trechos vizinhos
+    se sobrepõem (registrado).
 - 2026-09-17, cenário "parecer de companhia aberta" (Gerdau, DFP 2025), com skill:
   passou. Quatro chamadas, direto em `cvm_parecer_dfp`, sem tentar `texto_documento`
   da DFP; tipo, firma, data, PAA separado de ressalva.
