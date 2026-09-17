@@ -60,10 +60,12 @@ cada carga da base; o comportamento não deve mudar. Detalhes em `evals/README.m
 
 ## Release
 
-Cada mudança visível para quem usa vira uma entrada no `CHANGELOG.md` e uma tag
-`vX.Y.Z`. A tag dispara o workflow de release, que roda o check, gera os zips e publica
-a release no GitHub com as notas do changelog. Quem instala por zip no Claude.ai baixa
-dali.
+A release é automática no merge na `main`. O workflow lê a versão da primeira seção
+`## [X.Y.Z]` do `CHANGELOG.md`: se a tag `vX.Y.Z` ainda não existe, ele roda o check,
+gera os zips, cria a tag e publica a release no GitHub com as notas dessa seção; se já
+existe, não faz nada. Ou seja, para lançar uma versão basta o PR trazer a seção nova no
+topo do changelog. Merge sem versão nova (docs, evals, CI) não gera release. Quem instala
+por zip no Claude.ai baixa dali.
 
 ## Licença
 

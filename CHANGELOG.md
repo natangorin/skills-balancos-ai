@@ -1,7 +1,8 @@
 # Changelog
 
 Mudanças visíveis para quem usa as skills, por versão. A tag `vX.Y.Z` do repositório
-corresponde à `metadata.version` `X.Y` das skills que mudaram. Formato inspirado em
+corresponde à `metadata.version` `X.Y` das skills que mudaram. A seção mais recente no
+topo define a versão: no merge na `main`, se a tag dela não existe, a release sai sozinha. Formato inspirado em
 [Keep a Changelog](https://keepachangelog.com/pt-BR/1.1.0/).
 
 ## [0.2.0] - 2026-09-17
