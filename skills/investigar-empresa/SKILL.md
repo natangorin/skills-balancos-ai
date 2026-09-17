@@ -2,10 +2,10 @@
 name: investigar-empresa
 description: Use quando pedirem um retrato de uma empresa brasileira específica ("me conta sobre a X", "o que sabemos da X", "como está a X financeiramente", "perfil da empresa X") com o MCP do Balanços.AI conectado, ou quando o usuário citar um CNPJ ou razão social e quiser entender tamanho, tendência e saúde financeira.
 license: MIT
-compatibility: Requer o MCP do Balanços.AI conectado. Assume as skills balancos-ai e indicadores-financeiros.
+compatibility: Requer o MCP do Balanços.AI conectado. Assume as skills balancos-ai e indicadores-financeiros; companhia-aberta e instituicao-financeira quando a empresa está na CVM ou no BCB.
 metadata:
   author: Balanços.AI
-  version: "0.1"
+  version: "0.2"
 ---
 
 # Investigar uma empresa
@@ -17,8 +17,9 @@ que é interpretação:
 
 1. **Identidade**: razão social, CNPJ, natureza jurídica, CNAE, UF e município, situação
    cadastral, setor da base, link da empresa.
-2. **Natureza do dado**: se é entidade operacional ou holding, e por quê (CNAE, receita
-   diante do ativo). Fonte por exercício (xbrl ou llm). Anos disponíveis de BP e DRE.
+2. **Natureza do dado**: fonte (publicações, CVM ou BCB); na CVM, família e visão; no
+   BCB, nível e CodInst; nas publicações, se é entidade operacional ou holding e por quê
+   (CNAE, receita diante do ativo) e a fonte por exercício (xbrl ou llm). Anos disponíveis.
 3. **Tamanho**: ativo total, patrimônio líquido, receita líquida e lucro líquido do último
    exercício, em R$ mi ou bi, com o ano. Em holding, acrescente o que o relatório da
    administração diz do grupo (EBITDA, lucro, dívida líquida consolidados), citado e
@@ -28,6 +29,13 @@ que é interpretação:
    Anomalias excluídas e declaradas; anomalia fora da janela vai numa linha da seção 7.
 5. **Rentabilidade e estrutura de capital**: margens, ROE, liquidez corrente,
    endividamento e composição, com a leitura da skill indicadores-financeiros.
+   Em companhia aberta, a seção 5 acrescenta EBITDA, dívida líquida, cobertura de juros e
+   caixa operacional com o código da conta (skill companhia-aberta), e uma linha com o
+   tipo do último parecer. Em instituição financeira, as seções 3, 4 e 5 viram: tamanho
+   (ativo, carteira, captações, PL e Basileia na última data-base), trajetória (oito
+   trimestres de ativo, carteira, captações, PL e lucro semestral, com a era) e
+   rentabilidade (ROE anual, crescimento de carteira, Basileia, imobilização), tudo da
+   skill instituicao-financeira.
 6. **Publicações**: as 3 a 5 mais recentes com tipo, data e link; total no índice.
 7. **Ressalvas**: tudo que ficou fora (consolidado, dívida, fluxo de caixa), com o caminho
    pelo texto da publicação. `dados_atualizados_em`.
@@ -38,12 +46,17 @@ que é interpretação:
 1. `buscar_empresas` com termo curto. Se vier mais de uma, escolha pelo CNPJ ou pela
    ficha e diga qual escolheu e quais descartou (homônimos, coligadas).
 2. `analisar_empresa` com o slug. Uma chamada; não repita `ficha_empresa`,
-   `balancos_empresa` e `dres_empresa` para a mesma empresa.
-3. Classifique a natureza do dado antes de qualquer número: CNAE 64.62-0 ou 64.63-8,
-   "participações" ou "holding" na descrição, receita líquida abaixo de 1% do ativo, ou
-   lucro operacional acima do lucro bruto indicam holding ou controladora. Nesse caso a
-   seção 5 mostra só ROE, alavancagem e tendência de PL e lucro, e a seção 7 diz que o
-   número do grupo está no consolidado da publicação.
+   `balancos_empresa` e `dres_empresa` para a mesma empresa. Depois, roteie pela skill
+   balancos-ai: S.A. aberta, `cvm_analisar_companhia` com o CNPJ e siga a skill
+   companhia-aberta; instituição financeira, `bcb_analisar_instituicao` com a raiz do
+   CNPJ e siga a skill instituicao-financeira. Os números do memo vêm da fonte que achou;
+   as publicações continuam para a seção 6.
+3. Classifique a natureza do dado antes de qualquer número. Na fonte publicações: CNAE
+   64.62-0 ou 64.63-8, "participações" ou "holding" na descrição, receita líquida abaixo
+   de 1% do ativo, ou lucro operacional acima do lucro bruto indicam holding ou
+   controladora; a seção 5 mostra só ROE, alavancagem e tendência de PL e lucro, e a
+   seção 7 diz que o número do grupo está no consolidado da publicação. Na CVM: use a visão
+   consolidada e a regra de holding não se aplica. No BCB: use o nível padrão.
 4. Monte a série pelo `exercicio`, pareando BP e DRE do mesmo ano. Exclua exercícios com
    ativo de R$ 1.000, receita negativa ou salto de mil vezes, e liste-os na seção 7 com o
    link do documento.

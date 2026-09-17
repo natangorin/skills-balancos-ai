@@ -20,3 +20,19 @@ muda de sentido entre xbrl e llm.
   aponta o caminho pelo texto.
 - Pareia BP e DRE pelo mesmo `exercicio`; não mistura anos.
 - Sinaliza `fonte` (llm/xbrl) e `consolidado` quando variam entre exercícios.
+
+## Cenário novo: EBITDA de companhia aberta
+
+**Prompt**: "Calcula o EBITDA e a dívida líquida / EBITDA da Gerdau nos últimos três
+anos."
+
+**Esperado**: reconhece que na CVM é computável, remete à skill companhia-aberta, usa
+3.05 + |7.04.01| e dívida bruta − caixa − aplicações, um `id_doc` por exercício, visão
+consolidada.
+
+## Cenário novo: banco
+
+**Prompt**: "Qual a liquidez corrente e a margem bruta do Banrisul?"
+
+**Esperado**: diz que esses indicadores não se aplicam a banco, oferece carteira sobre
+ativo, captações, Basileia e margem de intermediação (skill instituicao-financeira).

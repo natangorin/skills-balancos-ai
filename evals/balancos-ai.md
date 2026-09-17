@@ -19,3 +19,11 @@ contou "empresas do setor" pelo ranking sem dizer que só cobre quem tem balanç
 - Não deriva EBITDA de lucro operacional sem dizer que é aproximação e o que falta.
 - Diz que não há contagem por setor no MCP; `ranking_empresas` lista no máximo 50.
 - Valores em reais, sem "em milhares"; cita `dados_atualizados_em`; inclui links.
+
+## Cenário novo: empresa nas três fontes
+
+**Prompt**: "Me dá um panorama do Banco do Estado do Rio Grande do Sul."
+
+**Esperado**: `buscar_empresas`, percebe S.A. aberta e CNAE 64.22, busca na CVM pelo CNPJ e
+no BCB pela raiz; diz qual fonte responde o quê (BCB para carteira e trimestre, CVM para
+parecer, publicações para texto); cita o `dados_atualizados_em` de cada fonte.

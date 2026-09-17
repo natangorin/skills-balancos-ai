@@ -5,7 +5,7 @@ license: MIT
 compatibility: Requer o MCP do Balanços.AI conectado. Assume a skill balancos-ai.
 metadata:
   author: Balanços.AI
-  version: "0.1"
+  version: "0.2"
 ---
 
 # Indicadores financeiros com o dado do Balanços.AI
@@ -27,6 +27,11 @@ DRE (`dres[].valores_em_reais`): `receita_bruta`, `receita_liquida`, `custo`,
 
 Pareie BP e DRE pelo mesmo `exercicio`. Um ano sem BP ou sem DRE entra na tabela com o
 indicador em branco, nunca com o ano vizinho no lugar.
+
+Os mesmos nomes de campo voltam em `cvm_balancos_companhia` e `cvm_dres_companhia` (skill
+companhia-aberta), com `visao` a mais: as fórmulas valem, e o cabeçalho diz a visão.
+`bcb_resultados_instituicao` também usa esses nomes, mas com semântica de intermediação
+financeira: não aplique esta skill a banco; use a skill instituicao-financeira.
 
 ## Fórmulas
 
@@ -63,14 +68,17 @@ Se faltar mais de um termo da identidade, o indicador fica em branco.
 
 ## Incomputável com o dado estruturado
 
-| Pedido | Por que não | Caminho |
+| Pedido | Na fonte publicações | Na CVM (companhia aberta, skill companhia-aberta) |
 |---|---|---|
-| EBITDA | não há depreciação e amortização | "EBITDA ajustado" divulgado no relatório da administração; ou EBIT + depreciação da DVA, rotulado aproximado |
-| Dívida bruta e líquida | não há empréstimos nem caixa em linha própria | nota de empréstimos e financiamentos e nota de caixa no texto |
-| Cobertura de juros | não há resultado financeiro nem despesa financeira | DRE completa no texto ("resultado financeiro", "despesas financeiras"); encargos de empréstimos na DVA |
-| Fluxo de caixa | não há DFC | DFC no texto da publicação (vem depois da DMPL, antes das notas) |
-| Prazo médio de recebimento, estoque, pagamento | não há contas a receber, estoques, fornecedores | notas explicativas |
-| ROIC, múltiplos | falta dívida, caixa e valor de mercado | fora da base |
+| EBITDA | não há depreciação; "EBITDA ajustado" do relatório da administração, ou EBIT + depreciação da DVA no texto, rotulado aproximado | 3.05 + \|7.04.01\| da DVA, proveniência 1 |
+| Dívida bruta e líquida | nota de empréstimos e nota de caixa no texto | 2.01.04 + 2.02.01, menos 1.01.01 e 1.01.02 |
+| Cobertura de juros | DRE completa no texto; encargos de empréstimos na DVA | 3.05 / \|3.06.02\| |
+| Fluxo de caixa | DFC no texto (depois da DMPL, antes das notas) | 6.01, 6.02, 6.03 da DFC |
+| Prazo médio de recebimento, estoque, pagamento | notas explicativas | 1.01.03, 1.01.04, 2.01.02 sobre 3.01 e 3.02 |
+| ROIC, múltiplos | fora da base | falta valor de mercado; fora |
+
+Em instituição financeira nenhuma linha desta tabela se aplica; o vocabulário é carteira,
+captações, Basileia e resultado de intermediação (skill instituicao-financeira).
 
 Não use `lucro_operacional` como proxy de EBITDA, nem `passivo_total` como "dívida". Diga
 "passivo exigível, que inclui fornecedores, tributos e provisões" quando usar alavancagem.
