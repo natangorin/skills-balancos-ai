@@ -7,7 +7,7 @@ Reprova quando:
 - `description` vazia ou acima de 1024 caracteres;
 - valor do frontmatter com ": " sem aspas (YAML inválido; `npx skills add` pula a skill);
 - SKILL.md acima de 500 linhas;
-- nome com cara de tool citado em crase (`buscar_x`, `ranking_y`...) que não existe no MCP;
+- nome com cara de tool citado em crase (`buscar_x`, `cvm_x`, `bcb_x`...) que não existe no MCP;
 - link http(s) para domínio fora da lista permitida;
 - arquivo referenciado como `references/...` que não existe.
 """
@@ -22,6 +22,7 @@ RAIZ = Path(__file__).resolve().parent.parent
 SKILLS = RAIZ / "skills"
 
 TOOLS_DO_MCP = {
+    # publicações
     "buscar_empresas",
     "ficha_empresa",
     "balancos_empresa",
@@ -30,6 +31,28 @@ TOOLS_DO_MCP = {
     "texto_documento",
     "ranking_empresas",
     "analisar_empresa",
+    # CVM (companhias abertas, DFP)
+    "cvm_buscar_companhias",
+    "cvm_ficha_companhia",
+    "cvm_analisar_companhia",
+    "cvm_dfps_companhia",
+    "cvm_entrega_dfp",
+    "cvm_balancos_companhia",
+    "cvm_dres_companhia",
+    "cvm_demonstracoes_dfp",
+    "cvm_parecer_dfp",
+    "cvm_ranking_companhias",
+    # BCB (instituições financeiras, IF.data)
+    "bcb_buscar_instituicoes",
+    "bcb_ficha_instituicao",
+    "bcb_analisar_instituicao",
+    "bcb_trimestres_instituicao",
+    "bcb_resultados_instituicao",
+    "bcb_relatorios_instituicao",
+    "bcb_estrutura_relatorios",
+    "bcb_conglomerado",
+    "bcb_ranking_instituicoes",
+    "bcb_data_bases",
 }
 DOMINIOS_PERMITIDOS = {
     "balancos.ai",
@@ -45,7 +68,8 @@ DOMINIOS_PERMITIDOS = {
 }
 RE_NOME = re.compile(r"^[a-z0-9]+(-[a-z0-9]+)*$")
 RE_TOOL = re.compile(
-    r"`((?:buscar|ficha|balancos|dres|documentos|texto|ranking|analisar|listar|comparar|"
+    r"`((?:cvm|bcb)_[a-z_]+|"
+    r"(?:buscar|ficha|balancos|dres|documentos|texto|ranking|analisar|listar|comparar|"
     r"pares|novidades|contar|filtrar|empresas|setores)_[a-z_]+)(?:\([^)]*\))?`"
 )
 RE_LINK = re.compile(r"https?://([a-zA-Z0-9-]+(?:\.[a-zA-Z0-9-]+)+)")
