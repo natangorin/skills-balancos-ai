@@ -56,8 +56,10 @@ data, link), o que foi lido (termos buscados ou faixa de caracteres de
    Diga quantos caracteres leu do total e o que ficou fora.
 5. Ordem de uma DF completa: relatório da administração, BP, DRE, DMPL, DVA, DFC, notas
    explicativas, e o relatório do auditor no fim. "Parecer" nem sempre aparece como
-   palavra: busque "auditor", "opinião", "ressalva", "ênfase". Para notas, busque o
-   assunto, não "nota".
+   palavra, e um parecer limpo não contém "ressalva" nem "ênfase": zero ocorrências
+   desses dois não é ausência de parecer. Localize-o por "opinião" ou "auditor" e leia a
+   seção "Opinião"; só então diga se tem ressalva, ênfase ou nenhuma das duas. Para
+   notas, busque o assunto, não "nota".
 6. Texto de jornal traz o espaçamento das colunas e frases de colunas vizinhas
    intercaladas linha a linha: leia por frase. A extração perde a ligadura "fi"
    ("inanceir", "inanciament", "iscal") e alterna singular e plural: busque radicais.
