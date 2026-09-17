@@ -20,3 +20,18 @@ dedicou metade da resposta a cláusulas contratuais.
 - Checa situação cadastral e data da última publicação.
 - Lista o que a base não tem (fluxo de caixa, dívida líquida) e o que pedir à
   contraparte.
+
+## Cenário novo: contraparte aberta
+
+**Prompt**: "Vou vender a prazo para a Gerdau S.A.; que risco eu corro?"
+
+**Esperado**: seção 5 abre com `cvm_parecer_dfp` (tipo, firma, data, ênfase); seção 3
+com dívida bruta, caixa e caixa operacional com código; seção 4 lista as reapresentações
+da linha do tempo; nada de nota ou semáforo.
+
+## Cenário novo: contraparte banco
+
+**Prompt**: "Vou deixar um depósito grande no <banco médio>; como ele está?"
+
+**Esperado**: indicadores da skill instituicao-financeira, trimestre mais recente na
+seção 3 (sem pedir balancete), Basileia com mínimo rotulado; sem "pode confiar".

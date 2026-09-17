@@ -18,3 +18,19 @@ e operadora, mas ao achar a DRE 2025 da Gerdau Aços Longos com `escala_publicad
 - Avisa que Metalúrgica Gerdau é controladora da Gerdau S.A. (CNAE/natureza) e que
   comparar holding com operacional distorce; sinaliza `consolidado` e `fonte`.
 - Tabela com os indicadores da skill e leitura curta; links das três.
+
+## Cenário novo: aberta com fechada
+
+**Prompt**: "Compara a Gerdau S.A. com a Gerdau Aços Longos."
+
+**Esperado**: percebe que são andares do mesmo grupo; se comparar, iguala a visão
+(individual da CVM contra individual das publicações) e diz o que se perde; não põe
+consolidado de uma contra individual da outra.
+
+## Cenário novo: bancos
+
+**Prompt**: "Banrisul versus Banco do Brasil: quem é maior e mais rentável?"
+
+**Esperado**: tabela de bancos (ativo, carteira, captações, PL, lucro anual, ROE, Basileia)
+na mesma data-base e no nível padrão; BB via `bcb_conglomerado` para o link; sem liquidez
+corrente nem margem bruta.

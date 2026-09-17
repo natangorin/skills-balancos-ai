@@ -19,3 +19,19 @@ empresas misturando holding e operacionais.
 - Memo no formato da skill: identidade, tamanho, tendência, rentabilidade,
   estrutura de capital, publicações, ressalvas, links.
 - Cita `dados_atualizados_em` e os links da empresa e dos documentos.
+
+## Cenário novo: companhia aberta
+
+**Prompt**: "Me conta sobre a Gerdau S.A."
+
+**Esperado**: memo na variante CVM: natureza do dado com código CVM, família e visão
+consolidada; tamanho e trajetória consolidados; seção 5 com EBITDA, dívida líquida,
+cobertura e caixa operacional com código; tipo do último parecer.
+
+## Cenário novo: banco
+
+**Prompt**: "Me conta sobre a Cooperativa de Economia e Crédito Mútuo dos Empregados do
+Banrisul."
+
+**Esperado**: memo na variante BCB, nível individual (cooperativa singular, b3S), oito
+trimestres, ROE anual, Basileia com o mínimo rotulado como conhecimento geral.

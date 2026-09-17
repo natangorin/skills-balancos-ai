@@ -15,12 +15,25 @@ ressalvas declarar e o que responder quando o dado não existe.
 | Skill | Use quando |
 |---|---|
 | [`balancos-ai`](skills/balancos-ai/) | Base: como o MCP funciona, ferramentas, limites, vocabulário. As demais assumem esta. |
+| [`companhia-aberta`](skills/companhia-aberta/) | Empresa é S.A. aberta: consolidado, conta a conta, DFC, EBITDA, dívida líquida, parecer, reapresentação, ranking de abertas. |
+| [`instituicao-financeira`](skills/instituicao-financeira/) | Empresa é banco, cooperativa ou financeira: carteira, captações, Basileia, trimestre, conglomerado, ranking do IF.data. |
 | [`indicadores-financeiros`](skills/indicadores-financeiros/) | Precisar calcular liquidez, endividamento, margens, ROE, ROA, CAGR a partir do BP e da DRE. |
 | [`investigar-empresa`](skills/investigar-empresa/) | "Me conta sobre a empresa X", "o que sabemos da X". |
 | [`comparar-empresas`](skills/comparar-empresas/) | "X versus Y", "compara essas cinco", "como a X fica frente aos pares". |
 | [`due-diligence-financeira`](skills/due-diligence-financeira/) | Homologar fornecedor ou cliente, avaliar alvo de aquisição ou investimento. |
 | [`originacao-ma`](skills/originacao-ma/) | Mapear alvos de aquisição num setor ou possíveis compradores para uma empresa. |
 | [`ler-publicacao`](skills/ler-publicacao/) | Ler uma ata, notas explicativas, parecer de auditoria ou relatório da administração. |
+
+## Três fontes num MCP só
+
+| Fonte | Tools | Quem | O que traz |
+|---|---|---|---|
+| Publicações | `buscar_empresas`, `analisar_empresa`, `texto_documento`, `ranking_empresas`... | qualquer empresa com publicação legal | BP de 8 linhas, DRE de 6, individual, texto das publicações |
+| CVM | `cvm_*` | companhias abertas com DFP (2010 em diante) | consolidado e individual, conta a conta com DFC e DVA, parecer do auditor, reapresentações |
+| BCB | `bcb_*` | instituições financeiras do IF.data (2000 em diante) | série trimestral, carteira, captações, Basileia, conglomerados |
+
+A skill `balancos-ai` ensina a rotear pelo CNPJ; `companhia-aberta` e
+`instituicao-financeira` ensinam cada fonte; as skills de tarefa usam a fonte certa.
 
 ## Instalar
 
@@ -73,9 +86,10 @@ Qualquer cliente que aceite servidores MCP remotos por HTTP conecta em
 ## O que as skills não fazem
 
 - Não substituem o MCP: sem ele conectado, o agente não tem dado.
-- Não inventam o que a base não tem. Fluxo de caixa, EBITDA, dívida líquida e
-  cobertura de juros não vêm em campo estruturado; as skills ensinam a buscar isso
-  no texto das publicações e a declarar quando não encontrou.
+- Não inventam o que a base não tem. Para companhia aberta, fluxo de caixa, EBITDA,
+  dívida líquida e cobertura de juros vêm do conta a conta da CVM, com o código da conta;
+  para as demais, as skills ensinam a buscar isso no texto das publicações e a declarar
+  quando não encontrou.
 - Não emitem nota de crédito, rating ou recomendação de investimento. Entregam
   evidência organizada e perguntas a fazer.
 
@@ -94,7 +108,9 @@ para receber aviso.
 
 ## Limitações conhecidas
 
-As skills são escritas em cima do que o MCP entrega hoje, e dizem isso ao usuário:
+As skills são escritas em cima do que o MCP entrega hoje, e dizem isso ao usuário.
+
+Fonte publicações:
 
 - Balanço com 8 linhas e DRE com 6, sempre da entidade individual (sem consolidado).
 - Texto de publicação limitado aos primeiros 50 mil caracteres; parecer do auditor e
@@ -102,7 +118,20 @@ As skills são escritas em cima do que o MCP entrega hoje, e dizem isso ao usuá
 - Ranking com até 50 empresas por chamada, sem filtro por faixa de receita.
 - Rótulo de setor por seção CNAE, com alguns rótulos herdados.
 
-Quando o MCP ganhar essas capacidades, as skills mudam junto.
+Fonte CVM:
+
+- Só companhias abertas com DFP, de 2010 em diante; sem ITR trimestral.
+- Ranking por exercício e família, sem filtro por UF ou setor.
+- Notas explicativas continuam só no texto da publicação.
+
+Fonte BCB:
+
+- Busca por nome sofre com fundos de investimento e nomes fantasia; a raiz do CNPJ
+  resolve.
+- Lucro publicado acumulado no semestre; quebra de era contábil em março de 2025.
+- Sem parecer, notas ou DFC.
+
+Em todas: valor de mercado, quadro societário, notas estruturadas, paginação.
 
 ## Desenvolvimento
 

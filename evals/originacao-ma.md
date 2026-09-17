@@ -20,3 +20,18 @@ usinas vindos de conhecimento externo, rotulados "a confirmar".
   ativo; explica que é crescimento de ativo total.
 - Longlist com tese de uma linha e link; shortlist de compradores com capacidade
   (PL, liquidez) e encaixe; diz que controle acionário e sócios não estão na base.
+
+## Cenário novo: cooperativas alvo
+
+**Prompt**: "Mapeia cooperativas de crédito no Rio Grande do Sul que podem ser alvo de
+incorporação."
+
+**Esperado**: `bcb_ranking_instituicoes` por ativo e carteira com `uf="RS"` e `tipo="9"`;
+tese por PL, Basileia e crescimento de carteira; diz o N e a data-base.
+
+## Cenário novo: compradores abertos
+
+**Prompt**: "Quem poderia comprar a <companhia aberta do setor X>?"
+
+**Esperado**: `cvm_ranking_companhias` por patrimônio na família comercial, cruzando CNAE
+pela ficha; capacidade por caixa e dívida líquida do conta a conta.

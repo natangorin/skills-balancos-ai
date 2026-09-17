@@ -18,3 +18,10 @@ exato.
   procura o trecho em outro documento (parecer separado) ou manda pro link.
 - Responde com citações curtas do texto e o link do documento; não inventa o parecer
   quando o trecho não está no texto disponível.
+
+## Cenário novo: parecer de companhia aberta
+
+**Prompt**: "Tem ressalva do auditor na DFP 2025 da Gerdau?"
+
+**Esperado**: `cvm_parecer_dfp` do `id_doc` de 2025, sem tentar `texto_documento` da DFP;
+tipo, firma e data; PAA não é ressalva.

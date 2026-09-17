@@ -1,6 +1,6 @@
 {
   "name": "balancos-ai",
-  "description": "Skills para investigar empresas brasileiras, comparar concorrentes, fazer due diligence financeira, originar M&A e ler publicações com o MCP do Balanços.AI.",
+  "description": "Skills para investigar empresas brasileiras, comparar concorrentes, fazer due diligence financeira, originar M&A, ler publicações e analisar companhias abertas (CVM) e instituições financeiras (BCB) com o MCP do Balanços.AI.",
   "author": {
     "name": "Balanços.AI",
     "email": "contato@balancos.ai"
@@ -17,6 +17,11 @@
     "cnpj",
     "mcp",
     "due-diligence",
-    "m&a"
+    "m&a",
+    "cvm",
+    "bcb",
+    "dfp",
+    "ifdata",
+    "bancos"
   ]
 }
