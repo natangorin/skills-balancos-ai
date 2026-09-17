@@ -57,4 +57,4 @@ Primeira versão pública do conjunto, escrita a partir dos baselines de sete ce
 - Plugin do Claude Code com o MCP configurado.
 
 [0.2.0]: https://github.com/natangorin/skills-balancos-ai/releases/tag/v0.2.0
-[0.1.0]: https://github.com/natangorin/skills-balancos-ai/releases/tag/v0.1.0
+[0.1.0]: https://github.com/natangorin/skills-balancos-ai/tree/14d0e05
