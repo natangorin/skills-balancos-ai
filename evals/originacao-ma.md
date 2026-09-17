@@ -38,8 +38,6 @@ pela ficha; capacidade por caixa e dívida líquida do conta a conta.
 
 ## Resultados registrados
 
-## Resultados registrados
-
 - 2026-09-17, cenário "cooperativas alvo" (RS), com skill: passou. Rankings por ativo,
   carteira, lucro, PL e Basileia com `uf="RS"` e `tipo="9"`, 18 retratos, 28 chamadas;
   dentro do corte, borda e descartadas com motivo; compradores por sistema.

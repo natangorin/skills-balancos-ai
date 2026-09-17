@@ -28,8 +28,6 @@ tipo, firma e data; PAA não é ressalva.
 
 ## Resultados registrados
 
-## Resultados registrados
-
 - 2026-09-17, cenário "parecer de companhia aberta" (Gerdau, DFP 2025), com skill:
   passou. Quatro chamadas, direto em `cvm_parecer_dfp`, sem tentar `texto_documento`
   da DFP; tipo, firma, data, PAA separado de ressalva.

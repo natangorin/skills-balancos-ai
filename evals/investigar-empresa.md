@@ -38,8 +38,6 @@ trimestres, ROE anual, Basileia com o mínimo rotulado como conhecimento geral.
 
 ## Resultados registrados
 
-## Resultados registrados
-
 - 2026-09-17, cenário "companhia aberta" (Gerdau S.A.), com skill: passou na variante
   CVM, com todas as seções, códigos de conta, parecer e a nota do arrendamento fora de
   2.01.04.
