@@ -2,10 +2,10 @@
 name: ler-publicacao
 description: Use quando pedirem o conteúdo de uma publicação legal de empresa brasileira com o MCP do Balanços.AI conectado, como "o que diz a nota explicativa", "resume a ata", "tem ressalva do auditor", "o que o relatório da administração fala", "quanto de dívida aparece nas notas", "eventos subsequentes", ou qualquer pergunta que exija ler o texto de um documento.
 license: MIT
-compatibility: Requer o MCP do Balanços.AI conectado. Assume a skill balancos-ai.
+compatibility: Requer o MCP do Balanços.AI conectado. Assume a skill balancos-ai; companhia-aberta quando a empresa está na CVM.
 metadata:
   author: Balanços.AI
-  version: "0.1"
+  version: "0.2"
 ---
 
 # Ler uma publicação
@@ -23,7 +23,11 @@ data, link) e a declaração do que o trecho disponível não cobre. Sem trecho,
    - publicação em jornal ("Demonstrações Financeiras", "Demonstração de Resultados",
      "Demonstrações Contábeis Completas" com várias páginas) costuma ter texto;
    - "Demonstrações Financeiras Padronizadas" (DFP, CVM) costuma vir "texto ainda não
-     extraído";
+     extraído". Se a empresa é companhia aberta, o que a DFP tem de estruturado não
+     precisa de texto: parecer do auditor em `cvm_parecer_dfp` (tipo, texto integral,
+     declarações dos diretores) e demonstrações conta a conta em `cvm_demonstracoes_dfp`
+     (skill companhia-aberta). Notas explicativas e relatório da administração continuam
+     só no texto da publicação em jornal;
    - ata, edital e press release têm texto curto e inteiro.
    O `tipo` do índice é aproximado e `ano_referencia` pode ser o ano da publicação em
    jornal; julgue pelo título, data, `paginas` e, depois da chamada, por
@@ -52,6 +56,8 @@ data, link) e a declaração do que o trecho disponível não cobre. Sem trecho,
 
 - Só o que está no texto. Número de nota, página, valor ou opinião do auditor de memória
   ou "pelo padrão das demonstrações" não entram.
+- "Tem ressalva do auditor" em companhia aberta vai direto em `cvm_parecer_dfp` do
+  `id_doc` do exercício; o texto integral vem inteiro, sem o corte de 50 mil caracteres.
 - "Principais assuntos de auditoria" não é ressalva nem ênfase.
 - Texto do jornal vem sem formatação: tabelas viram linhas soltas; confirme o valor pelo
   rótulo ao lado antes de citar.
