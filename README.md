@@ -83,6 +83,16 @@ Qualquer cliente que aceite servidores MCP remotos por HTTP conecta em
 `https://mcp.balancos.ai/mcp`. O conteúdo das skills é Markdown: cole a
 `SKILL.md` que precisar nas instruções do seu agente.
 
+## O que sai da sua máquina
+
+As skills fazem o agente chamar o MCP do Balanços.AI, um serviço externo em
+`mcp.balancos.ai`. Cada chamada leva os parâmetros da tool (nome de empresa, CNPJ,
+métrica, filtro) com a sua autenticação, e o uso fica registrado na sua conta conforme
+a [política de privacidade](https://balancos.ai/privacidade) e os
+[termos](https://balancos.ai/termos). O conteúdo da conversa não vai para o serviço;
+só o que o agente coloca nos parâmetros. As skills não mandam o agente chamar nenhum
+outro endereço.
+
 ## O que as skills não fazem
 
 - Não substituem o MCP: sem ele conectado, o agente não tem dado.
@@ -103,8 +113,9 @@ Nenhum caminho atualiza sozinho por padrão. Para pegar a versão mais nova das 
 | Plugin do Claude Code | `/plugin` › Marketplaces › `balancos-ai` › Update, ou `claude plugin marketplace update balancos-ai` seguido de `/plugin` › Update. No mesmo menu dá para ligar a atualização automática desse marketplace (desligada por padrão para marketplaces de terceiros); com ela ligada, o Claude Code puxa cada novo commit em segundo plano ao iniciar. |
 | Zip no Claude.ai | Baixar o zip novo e subir de novo em Configurações › Capacidades › Skills, substituindo o anterior. |
 
-Cada mudança relevante vira uma release no GitHub com o que mudou por skill; siga o repositório
-para receber aviso.
+Cada mudança relevante vira uma entrada no [CHANGELOG](CHANGELOG.md) e uma
+[release no GitHub](https://github.com/natangorin/skills-balancos-ai/releases) com os
+zips; siga o repositório para receber aviso.
 
 ## Limitações conhecidas
 
@@ -143,6 +154,15 @@ make zips    # gera dist/<skill>.zip
 Formato: [Agent Skills](https://agentskills.io/specification). Cada skill fica em
 `skills/<nome>/SKILL.md`, com material pesado em `references/`. Os cenários de
 teste de cada skill estão em `evals/<nome>.md`.
+
+## Contribuir
+
+Issues e PRs são bem-vindos, em português. O [guia de contribuição](CONTRIBUTING.md)
+diz como escrever uma skill, rodar o check e registrar um eval. Skill que respondeu
+errado tem um [modelo de issue](https://github.com/natangorin/skills-balancos-ai/issues/new/choose)
+próprio. Problema no MCP ou nos dados vai para contato@balancos.ai, não para cá.
+Vulnerabilidade: veja [SECURITY.md](SECURITY.md). Código de conduta:
+[CODE_OF_CONDUCT.md](CODE_OF_CONDUCT.md).
 
 ## Licença
 
