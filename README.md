@@ -28,7 +28,7 @@ ressalvas declarar e o que responder quando o dado não existe.
 
 | Fonte | Tools | Quem | O que traz |
 |---|---|---|---|
-| Publicações | `buscar_empresas`, `analisar_empresa`, `texto_documento`, `ranking_empresas`... | qualquer empresa com publicação legal | BP de 8 linhas, DRE de 6, individual, texto das publicações |
+| Publicações | `buscar_empresas`, `analisar_empresa`, `texto_documento`, `ranking_empresas`... | qualquer empresa com publicação legal | BP de 8 linhas, DRE de 6, individual, texto integral das publicações |
 | CVM | `cvm_*` | companhias abertas com DFP (2010 em diante) | consolidado e individual, conta a conta com DFC e DVA, parecer do auditor, reapresentações |
 | BCB | `bcb_*` | instituições financeiras do IF.data (2000 em diante) | série trimestral, carteira, captações, Basileia, conglomerados |
 
@@ -124,8 +124,8 @@ As skills são escritas em cima do que o MCP entrega hoje, e dizem isso ao usuá
 Fonte publicações:
 
 - Balanço com 8 linhas e DRE com 6, sempre da entidade individual (sem consolidado).
-- Texto de publicação limitado aos primeiros 50 mil caracteres; parecer do auditor e
-  notas explicativas costumam ficar fora, e a skill aponta o link do documento.
+- Texto de publicação em pedaços de até 200 mil caracteres ou por busca de termo; DFP da
+  CVM e relatórios do IF.data não têm texto extraído.
 - Ranking com até 50 empresas por chamada, sem filtro por faixa de receita.
 - Rótulo de setor por seção CNAE, com alguns rótulos herdados.
 

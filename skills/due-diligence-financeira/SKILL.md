@@ -5,7 +5,7 @@ license: MIT
 compatibility: Requer o MCP do Balanços.AI conectado. Assume as skills balancos-ai, indicadores-financeiros e ler-publicacao; companhia-aberta e instituicao-financeira quando a contraparte está na CVM ou no BCB.
 metadata:
   author: Balanços.AI
-  version: "0.2"
+  version: "0.3"
 ---
 
 # Due diligence financeira
@@ -62,10 +62,12 @@ o que o texto diz, e o que falta. Não a deixe implícita entre as seções.
 4. Em companhia aberta, `cvm_parecer_dfp` da última entrega e da anterior antes de
    qualquer texto. Depois, leia texto: no índice de documentos, escolha a publicação mais
    recente com texto (jornal antes de DFP) e siga a skill ler-publicacao, com o roteiro em
-   [references/roteiro-notas.md](references/roteiro-notas.md). Se o texto vier gravado em
-   arquivo, leia o arquivo inteiro. Se vier truncado, diga o que ficou fora e leia
-   também a publicação do ano anterior: um item cortado neste ano (garantia da
-   controladora, covenant) pode estar inteiro no anterior, e aí você diz de que ano é.
+   [references/roteiro-notas.md](references/roteiro-notas.md): um `termo` por assunto
+   do roteiro em `texto_documento`, depois o entorno com `inicio` quando o trecho não
+   basta. Se o texto vier gravado em arquivo, leia o arquivo inteiro. Item ausente só
+   depois de dois termos do assunto sem ocorrência. A publicação do ano anterior serve
+   para item que este ano só menciona (garantia da controladora, covenant), e aí você
+   diz de que ano é.
 5. Escreva as seções 6 e 7 a partir do que ficou em aberto.
 6. Escreva o relatório.
 

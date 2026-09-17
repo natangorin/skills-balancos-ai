@@ -5,7 +5,7 @@ license: MIT
 compatibility: Requer o MCP do Balanços.AI (https://mcp.balancos.ai/mcp) conectado no cliente.
 metadata:
   author: Balanços.AI
-  version: "0.2"
+  version: "0.3"
 ---
 
 # Balanços.AI pelo MCP
@@ -83,7 +83,7 @@ resposta diz a fonte de cada número. Cada fonte tem o próprio `dados_atualizad
 | `balancos_empresa(chave, ano?)` | só os BPs (todos ou um ano) | |
 | `dres_empresa(chave, ano?)` | só as DREs (todas ou um ano) | |
 | `documentos_empresa(chave)` | índice de publicações, mais recentes primeiro | 100 |
-| `texto_documento(documento_id)` | texto extraído de uma publicação | 50 mil caracteres, sem offset |
+| `texto_documento(documento_id, inicio?, tamanho?, termo?)` | texto de uma publicação, em pedaços ou por termo | 200 mil caracteres por pedaço; 20 trechos por termo |
 | `ranking_empresas(metrica, uf?, setor?, limite?)` | maiores por ativo, receita, lucro ou crescimento | 50 por chamada |
 
 `chave` aceita slug ou CNPJ (com ou sem pontuação). Campos de cada resposta em
@@ -187,12 +187,17 @@ partir de uma frase ("caiu 15,7%") não é.
 
 ## Texto de publicações
 
-- `texto_documento` devolve os primeiros 50 mil caracteres. Uma DF completa tem 300 a
-  800 mil. `truncado: true` significa que parecer do auditor e notas explicativas, que
-  ficam no fim, provavelmente não vieram. Não há como pedir o resto. Diga isso e aponte
-  o link. Texto de jornal vem com o espaçamento das colunas: 50 mil brutos podem ser 20
-  mil úteis, e frases de colunas vizinhas se intercalam linha a linha; leia por frase.
-  A extração perde a ligadura "fi": procure "inanceir", "inanciament", "iscal".
+- `texto_documento` entrega o documento inteiro, de dois jeitos. Com `termo`, devolve
+  até 20 trechos com 600 caracteres de contexto para cada lado e a posição de cada um,
+  sem distinção de caixa nem acento: é o caminho para "tem ressalva", "quanto de dívida
+  nas notas", "eventos subsequentes". Sem `termo`, devolve um pedaço de `inicio` até
+  `inicio + tamanho` (padrão 100 mil, teto 200 mil) com `tamanho_total_chars`,
+  `truncado` e `proximo_inicio`; repita com `inicio=proximo_inicio` até `truncado:
+  false`. Uma DF completa tem 300 a 800 mil caracteres, com parecer do auditor e notas
+  no fim. Nunca diga que algo não está no documento sem ter buscado por termo ou lido até
+  o fim (skill ler-publicacao). Texto de jornal vem com o espaçamento das colunas e
+  frases de colunas vizinhas intercaladas linha a linha; leia por frase. A extração
+  perde a ligadura "fi": procure "inanceir", "inanciament", "iscal".
 - `ano_referencia` em publicação de jornal pode ser o ano da publicação, não do
   exercício ("DFs de 2025" com `ano_referencia: 2026`); confira pelo título e pela data.
 - DFPs da CVM costumam vir como "texto ainda não extraído". A publicação em jornal do
@@ -201,8 +206,8 @@ partir de uma frase ("caiu 15,7%") não é.
   de milhares de caracteres é a DF completa. Julgue pelo título, páginas e tamanho.
 - Se o cliente gravou o resultado da tool em arquivo por ser grande, leia o arquivo
   inteiro antes de responder. Um preview de 2 mil caracteres é só o cabeçalho.
-- O documento do ano seguinte traz o ano pedido como comparativo nas notas; o do ano
-  anterior pode conter um item que o corte de 50 mil deixou fora no ano corrente.
+- O documento do ano seguinte traz o ano pedido como comparativo nas notas e serve de
+  segunda fonte para um item que a publicação do ano só menciona.
 
 ## O que cada fonte não tem
 
@@ -240,6 +245,7 @@ carregado, e diga que é só isso. Para bancos, `bcb_ranking_instituicoes` com `
 | Multiplicar por mil um exercício com escala estranha | Sinalizar, excluir, apontar o documento |
 | Estimar EBITDA a partir de lucro operacional | Dizer que não há depreciação na base |
 | Responder com o preview de 2 KB do texto | Ler o arquivo gravado inteiro |
+| "Não está no documento" depois de um pedaço do texto | Buscar por `termo` ou ler até `truncado: false` |
 | Buscar pela razão social completa | Termo curto; depois CNPJ |
 | Usar o ranking de crescimento como "quem cresce" | Filtrar `ativo_base` mínimo e dizer que é ativo total |
 | Comparar 2025 de uma com 2023 de outra | Alinhar pelo exercício e declarar buracos |
