@@ -61,7 +61,10 @@ Campos de cada resposta em [references/payloads.md](references/payloads.md).
 - `comercial` usa o plano de contas padrão da CVM e o mapa de códigos desta skill.
 - `financeira` e `seguradora` têm plano próprio: o mapa **não** vale, o ranking só compara
   dentro da família (`familia` no `cvm_ranking_companhias`), e banco vai para a skill
-  instituicao-financeira, que tem carteira, captações e Basileia.
+  instituicao-financeira, que tem carteira, captações e Basileia. Em banco listado,
+  `dres[]` da CVM vem só com `lucro_liquido` (receita, custo e bruto nulos) e `balancos[]`
+  só com totais: use a CVM para consolidado, parecer e reapresentações, e o BCB para o
+  resto.
 
 ## Versões e reapresentações
 
@@ -69,9 +72,12 @@ Campos de cada resposta em [references/payloads.md](references/payloads.md).
   (`versao` e `id_doc` em cada linha de `balancos[]` e `dres[]`).
 - `n_reapresentacoes` na ficha e `reapresentacao: true` na linha do tempo são sinal para
   due diligence, mas uma reapresentação pode ser só a inclusão do parecer (Gerdau 2024:
-  v1 com `parecer: null`, v2 cinco dias depois com "Sem Ressalva"). Para dizer o que mudou,
-  compare `valor_atual` das duas versões pelo conta a conta; sem isso, diga só que houve
-  reapresentação e a data.
+  v1 com `parecer: null`, v2 cinco dias depois com "Sem Ressalva"). A v1 costuma estar na
+  base como casca vazia: `cvm_entrega_dfp` devolve `visoes: []` e o conta a conta responde
+  "a entrega não tem a visão". Confira `visoes` da v1 antes de pedir demonstrações dela.
+  Para saber se algum número mudou, compare o `valor_anterior` da DFP seguinte com o
+  `valor_atual` da última versão do exercício; sem isso, diga só que houve reapresentação
+  e a data.
 - `valor_anterior` é o comparativo **republicado na mesma DFP** e pode divergir do
   `valor_atual` da entrega anterior. Série usa a última versão de cada exercício; quando o
   comparativo diverge mais de 1% do publicado no ano anterior, diga que houve
@@ -86,13 +92,16 @@ Campos de cada resposta em [references/payloads.md](references/payloads.md).
 - "Principais assuntos de auditoria" não é ressalva nem ênfase.
 - Firma e data ficam no fim do texto; cite as duas. Troca de firma entre exercícios é
   sinal: compare pareceres de dois `id_doc`.
-- O texto vem sem quebras de linha entre seções; leia por frase.
+- O texto vem sem quebras de linha entre seções; leia por frase. A resposta passa de
+  40 mil caracteres: se o cliente a gravou em arquivo, leia o arquivo inteiro, não o
+  preview.
 
 ## Ranking
 
 - `ano` obrigatório; `visao` (padrão consolidado) e `familia` explícitas na resposta.
-- Grupos duplicam (JBS S.A. e JBS N.V. com a mesma receita de 2025): dedupe pelo `slug`
-  da `empresa` ou pelo nome e diga que deduplicou.
+- Grupos duplicam, por dupla listagem (JBS S.A. e JBS N.V. com a mesma receita de 2025) ou
+  por controladora e controlada ambas abertas (Metalúrgica Gerdau e Gerdau S.A.): dedupe
+  pelo `slug` da `empresa` ou pelo nome e diga que deduplicou.
 - Não há filtro por UF nem setor: para setor, cruze com `cnae_principal` da
   `ficha_empresa` de publicações; para UF idem. Diga que o corte foi feito do lado do
   agente e que o teto é 50 por chamada.
@@ -108,7 +117,7 @@ vêm negativas (custo, despesas, depreciação).
 | Indicador | Fórmula | Ressalva obrigatória |
 |---|---|---|
 | EBITDA | 3.05 + \|7.04.01\| (DVA) | depreciação da DVA inclui amortização e exaustão |
-| Dívida bruta | 2.01.04 + 2.02.01 | dizer se arrendamento (2.01.04.03 e 2.02.01.03) entrou; padrão: entra, porque está dentro da conta |
+| Dívida bruta | 2.01.04 + 2.02.01 | arrendamento: se está em 2.01.04.03 e 2.02.01.03, entra; muitas companhias o lançam em "Outras Obrigações" (2.01.05.02.x e 2.02.02.02.x, "Arrendamento mercantil a pagar"), e aí fica fora; procure "arrendamento" nas descrições e diga o que fez |
 | Dívida líquida | dívida bruta − 1.01.01 − 1.01.02 | aplicações de longo prazo (1.02.01.01 a 1.02.01.03) ficam fora por padrão; diga |
 | Cobertura de juros | 3.05 / \|3.06.02\| | 3.06.02 inclui variação cambial e perdas com derivativos; se a companhia abre 3.06.02.01 "Despesas Financeiras", use-a e diga |
 | Caixa operacional | 6.01 | método em `metodo` (direto ou indireto) |
