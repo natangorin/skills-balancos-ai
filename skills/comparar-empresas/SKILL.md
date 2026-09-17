@@ -2,10 +2,10 @@
 name: comparar-empresas
 description: Use quando pedirem para comparar duas ou mais empresas brasileiras ("X versus Y", "compara essas cinco", "qual é maior/mais rentável/mais endividada", "como a X fica frente aos concorrentes ou pares do setor") com o MCP do Balanços.AI conectado.
 license: MIT
-compatibility: Requer o MCP do Balanços.AI conectado. Assume as skills balancos-ai e indicadores-financeiros.
+compatibility: Requer o MCP do Balanços.AI conectado. Assume as skills balancos-ai e indicadores-financeiros; companhia-aberta e instituicao-financeira quando as empresas estão na CVM ou no BCB.
 metadata:
   author: Balanços.AI
-  version: "0.1"
+  version: "0.2"
 ---
 
 # Comparar empresas
@@ -27,13 +27,24 @@ consolidado, operacional ou holding) e uma resposta direta por pergunta feita ("
    um subsetor (geração, siderurgia) e corte por escala entre um terço e três vezes o
    ativo da empresa-alvo, dizendo o corte ao leitor. Diga quantas empresas a base
    devolveu e que o teto é 50 por chamada.
-2. `analisar_empresa` para cada uma, em paralelo.
+   Se a empresa-alvo é companhia aberta, os pares abertos vêm de
+   `cvm_ranking_companhias` no exercício, com a mesma `familia` e `visao` (não há UF nem
+   setor: corte por CNAE e UF pela `ficha_empresa`, e diga). Se é instituição financeira,
+   os pares vêm de `bcb_ranking_instituicoes` com `uf`, `tipo` ou `consolidado_bancario`
+   iguais, no nível padrão.
+2. Retrato de cada uma, em paralelo, pela fonte que o roteamento da skill balancos-ai
+   indicar: `analisar_empresa`, `cvm_analisar_companhia` ou `bcb_analisar_instituicao`.
 3. Escolha o exercício: o mais recente que **todas** têm. Se uma não tem, use o mais
    recente comum e mostre, em linha separada, o último ano de cada uma. Nunca misture anos
    na mesma coluna sem avisar no cabeçalho.
-4. Classifique a natureza de cada dado (skill balancos-ai): holding, controladora ou
-   operacional; fonte xbrl ou llm. Empresas do mesmo grupo (controladora e controlada)
-   não somam nem competem: diga que são andares da mesma operação.
+4. Classifique a natureza de cada dado (skill balancos-ai): fonte (publicações, CVM ou
+   BCB), família e visão na CVM, nível no BCB, holding ou operacional e xbrl ou llm nas
+   publicações. **Na mesma tabela, mesma fonte, mesma família e mesma visão**: consolidado
+   com consolidado, nunca consolidado de uma com individual de outra. Se uma está só nas
+   publicações (individual) e a outra na CVM (consolidado), mostre a individual da CVM
+   para igualar e diga o que se perde. Banco compara só com banco, pelas linhas da skill
+   instituicao-financeira. Empresas do mesmo grupo (controladora e controlada) não somam
+   nem competem: diga que são andares da mesma operação.
 5. Calcule com a skill indicadores-financeiros. Campo `null` só se deriva por identidade
    contábil, com nota. Exercício com escala trocada ou anomalia sai da comparação com
    nota e link; não se corrige. Se o texto da publicação tiver os valores literais, eles
@@ -46,7 +57,7 @@ consolidado, operacional ou holding) e uma resposta direta por pergunta feita ("
 
 | | Empresa A | Empresa B | Empresa C |
 |---|---|---|---|
-| Natureza do dado | xbrl, individual, operacional | xbrl, individual, holding | llm, individual, operacional |
+| Natureza do dado | CVM, consolidado, comercial | CVM, consolidado, comercial | publicações, llm, individual, operacional |
 | Exercício | 2025 | 2025 | 2025 |
 | Ativo total | | | |
 | Patrimônio líquido | | | |
@@ -57,9 +68,15 @@ consolidado, operacional ou holding) e uma resposta direta por pergunta feita ("
 | Liquidez corrente | | | |
 | Passivo exigível / ativo | | | |
 | Exigível no curto prazo | | | |
+| Dívida líquida (só CVM, com código) | | | não disponível |
+| EBITDA (só CVM, 3.05 + \|7.04.01\|) | | | não disponível |
 
 Valores em R$ mi ou bi, unidade no rótulo. Célula em branco com nota de rodapé quando o
 campo não existe ou o exercício foi excluído.
+
+Tabela de bancos: ativo total, carteira de crédito, captações, PL, lucro anual, ROE,
+carteira sobre ativo, Basileia, na mesma data-base e no nível padrão de cada um, com a
+era no cabeçalho (skill instituicao-financeira).
 
 ## Regras
 
