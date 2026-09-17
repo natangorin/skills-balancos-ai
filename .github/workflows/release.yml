@@ -1,7 +1,8 @@
 name: release
 on:
   push:
-    tags: ["v*"]
+    branches: [main]
+  workflow_dispatch:
 permissions:
   contents: write
 jobs:
@@ -9,26 +10,55 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+      - name: Lê a versão do CHANGELOG e vê se já tem tag
+        id: versao
+        run: |
+          v=$(grep -m1 -oE '^## \[[0-9]+\.[0-9]+\.[0-9]+\]' CHANGELOG.md | tr -d '#[] ')
+          if [ -z "$v" ]; then
+            echo "CHANGELOG.md não tem uma seção ## [X.Y.Z] no topo" >&2
+            exit 1
+          fi
+          echo "versao=$v" >> "$GITHUB_OUTPUT"
+          if git rev-parse -q --verify "refs/tags/v$v" >/dev/null; then
+            echo "v$v já existe, nada a fazer"
+            echo "nova=false" >> "$GITHUB_OUTPUT"
+          else
+            echo "v$v é nova, vai virar release"
+            echo "nova=true" >> "$GITHUB_OUTPUT"
+          fi
       - uses: actions/setup-python@v5
+        if: steps.versao.outputs.nova == 'true'
         with:
           python-version: "3.12"
       - name: Valida as skills
+        if: steps.versao.outputs.nova == 'true'
         run: python3 scripts/check.py
       - name: Gera os zips
+        if: steps.versao.outputs.nova == 'true'
         run: make zips
       - name: Extrai as notas do CHANGELOG
+        if: steps.versao.outputs.nova == 'true'
         run: |
-          v="${GITHUB_REF_NAME#v}"
+          v="${{ steps.versao.outputs.versao }}"
           awk -v v="$v" '
             $0 ~ "^## \\[" v "\\]" {p=1; next}
             /^## \[/ {p=0}
             p' CHANGELOG.md > notas.md
           if [ ! -s notas.md ]; then
-            echo "CHANGELOG.md não tem a seção ## [$v]" >&2
+            echo "CHANGELOG.md tem a seção ## [$v] vazia" >&2
             exit 1
           fi
           cat notas.md
-      - name: Publica a release
+      - name: Cria a tag e publica a release
+        if: steps.versao.outputs.nova == 'true'
         env:
           GH_TOKEN: ${{ github.token }}
-        run: gh release create "$GITHUB_REF_NAME" dist/*.zip --title "$GITHUB_REF_NAME" --notes-file notas.md
+        run: |
+          v="${{ steps.versao.outputs.versao }}"
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git tag -a "v$v" -m "Skills v$v"
+          git push origin "v$v"
+          gh release create "v$v" dist/*.zip --title "v$v" --notes-file notas.md
