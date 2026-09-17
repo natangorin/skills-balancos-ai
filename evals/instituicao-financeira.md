@@ -60,3 +60,16 @@ a data-base, o N e que sistemas (Sicredi, Sicoob) aparecem por cooperativa singu
 **Esperado**: `bcb_estrutura_relatorios` da última data-base para confirmar o id, depois
 `bcb_relatorios_instituicao` com `relatorio=129` (PJ por CNAE); tabela com as maiores
 linhas, valor em reais, `valor_ano_anterior` quando comparável, nível e data-base.
+
+## Resultados registrados
+
+- 2026-09-17, cenário 1 (com "quanto lucrou em 2025" junto), com skill: passou.
+  `buscar_empresas("Banrisul")` devolveu só subsidiárias e fundos; o agente repetiu com
+  "Banco do Estado do Rio Grande do Sul", achou o CNPJ, e buscou no BCB pela raiz
+  92702067 e na CVM pelo CNPJ. Usou o nível prudencial (CodInst 1000080154), citou era,
+  data-base 202606, lucro anual de 2025 pela DRE derivada com `completo: true`
+  (R$ 1,60 bi, semestres somados), consolidado da CVM ao lado (R$ 1,71 bi) com a
+  diferença explicada, quebra de era marcada entre 2024 e 2025, Basileia em porcentagem
+  com o mínimo rotulado como conhecimento geral, e o link do IF.data para trimestres sem
+  documento. Achado: a busca de publicações também falha com o nome fantasia; a skill
+  passou a mandar usar um trecho do nome oficial.

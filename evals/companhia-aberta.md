@@ -51,3 +51,12 @@ conta ou diz que não comparou.
 
 **Esperado**: `cvm_ranking_companhias(receita, 2025)`; percebe JBS S.A. e JBS N.V. com a
 mesma receita, deduplica e diz; declara visão consolidada, família e que o teto é 50.
+
+## Resultados registrados
+
+- 2026-09-17, cenário 1, com skill: passou. `buscar_empresas("Gerdau")` →
+  `cvm_buscar_companhias` pelo CNPJ → `cvm_analisar_companhia`, sem `analisar_empresa`.
+  Respondeu com o consolidado de 2025 (receita R$ 69,86 bi, ativo R$ 81,69 bi), visão,
+  `id_doc` 154830 e versão declarados, parecer "Sem Ressalva", individual apresentado
+  como "controladora sozinha", links da empresa e das entregas, `dados_atualizados_em`
+  da fonte CVM separado do de publicações.

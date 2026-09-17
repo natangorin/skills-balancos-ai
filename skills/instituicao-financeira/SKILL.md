@@ -23,8 +23,9 @@ banco tem vocabulário próprio (abaixo).
    e sabendo de dois problemas: fundos de investimento poluem a busca ("Banrisul" devolve
    20 fundos e não o banco) e nome fantasia não casa com o oficial ("Banrisul" com tipo 8
    devolve zero; o oficial é "Banco do Estado do Rio Grande do Sul"). Se o usuário deu nome
-   fantasia, obtenha o CNPJ por `buscar_empresas` das publicações ou pelo MCP do cnpj.ai
-   se disponível, e busque pela raiz.
+   fantasia, obtenha o CNPJ por `buscar_empresas` das publicações **com um trecho do nome
+   oficial** ("Estado do Rio Grande do Sul"; "Banrisul" ali também devolve só subsidiárias
+   e fundos) ou pelo MCP do cnpj.ai se disponível, e busque pela raiz.
 2. `bcb_analisar_instituicao(chave)`, chave = CodInst, CNPJ ou raiz. Uma chamada: ficha
    (`tipo`, `consolidado_bancario`, `segmento_prudencial`, sede, `conglomerados`,
    `niveis[]` com o CodInst de cada um e `padrao`, `ultima_data_base_resumo`), série
