@@ -38,13 +38,11 @@ seção 3 (sem pedir balancete), Basileia com mínimo rotulado; sem "pode confia
 
 ## Resultados registrados
 
-## Resultados registrados
-
 - 2026-09-17, cenário "contraparte aberta" (Gerdau S.A.), com skill: passou. Parecer
   estruturado de dois exercícios antes do texto, conta a conta com código na seção 3,
   reapresentações na seção 4, texto de dois anos lido inteiro, oito perguntas, sem nota
   nem semáforo.
 - 2026-09-17, cenário "contraparte banco" (Banco Daycoval), com skill: passou. Capital
   regulatório, funding por instrumento, carteira e inadimplência pelos relatórios,
-  trimestre mais recente na seção 3; tropeçou no CodInst do conglomerado como chave
-  (5 chamadas em erro), agora corrigido na skill instituicao-financeira.
+  trimestre mais recente na seção 3; tropeçou no CodInst do conglomerado como chave, agora corrigido na skill
+  instituicao-financeira.

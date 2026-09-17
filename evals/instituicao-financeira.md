@@ -84,10 +84,10 @@ linhas, valor em reais, `valor_ano_anterior` quando comparável, nível e data-b
     uma rotulada.
   - 5 (cooperativas do PR): `tipo="9"` e `b3S` com `uf="PR"`; descobriu que o ranking
     no nível padrão rotula cooperativas como prudencial com CNPJ nulo e que
-    `bcb_conglomerado` devolve zero membros para elas; gastou 13 chamadas até repetir o
-    ranking com `nivel="individual"`. A skill passou a dizer isso. Centrais (b3C)
+    `bcb_conglomerado` devolve zero membros para elas, e repetiu o ranking com
+    `nivel="individual"`. A skill passou a dizer isso. Centrais (b3C)
     entram no filtro de tipo 9; a skill passou a mandar separar.
   - 6 (carteira por setor): `bcb_estrutura_relatorios` e depois relatórios 129, 127,
-    126, 130 e 123; descobriu que o CodInst do conglomerado não serve como chave
-    (4 chamadas em erro). Corrigido na skill: chave da instituição com `nivel`. Também
+    126, 130 e 123; descobriu que o CodInst do conglomerado não serve como chave; corrigido na
+    skill: chave da instituição com `nivel`. Também
     notou que a carteira do SCR difere da contábil; registrado na skill.

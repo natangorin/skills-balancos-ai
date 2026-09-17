@@ -1,0 +1,24 @@
+name: Sugestão
+description: Nova skill, novo cenário de eval ou mudança numa rotina existente.
+title: "[sugestão] "
+labels: ["enhancement"]
+body:
+  - type: textarea
+    id: pedido
+    attributes:
+      label: Que pedido de usuário isso atende
+      description: Exemplos de prompt entre aspas ajudam mais que a descrição abstrata.
+    validations:
+      required: true
+  - type: textarea
+    id: hoje
+    attributes:
+      label: O que acontece hoje
+      description: Com as skills atuais, o agente faz o quê com esse pedido?
+  - type: textarea
+    id: proposta
+    attributes:
+      label: Proposta
+      description: Que rotina, que tools, que ressalvas. Se for skill nova, diga por que não cabe numa existente.
+    validations:
+      required: true

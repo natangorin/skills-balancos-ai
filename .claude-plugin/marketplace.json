@@ -8,15 +8,24 @@
     {
       "name": "balancos-ai",
       "source": "./",
-      "description": "Skills para usar o MCP do Balanços.AI: investigar empresas, comparar, due diligence financeira, originação de M&A e leitura de publicações. Conecta o MCP automaticamente (login OAuth).",
+      "description": "Skills para investigar empresas brasileiras, comparar concorrentes, fazer due diligence financeira, originar M&A, ler publicações e analisar companhias abertas (CVM) e instituições financeiras (BCB) com o MCP do Balanços.AI. Conecta o MCP automaticamente (login OAuth).",
       "homepage": "https://balancos.ai/mcp",
       "license": "MIT",
       "keywords": [
         "balancos",
+        "dre",
+        "balanco-patrimonial",
         "empresas",
         "brasil",
+        "cnpj",
         "mcp",
-        "financeiro"
+        "due-diligence",
+        "m&a",
+        "cvm",
+        "bcb",
+        "dfp",
+        "ifdata",
+        "bancos"
       ]
     }
   ]

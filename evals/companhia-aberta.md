@@ -69,7 +69,7 @@ mesma receita, deduplica e diz; declara visão consolidada, família e que o tet
     judicial e investigações), PAA separado, firma e data, resultado de 49 KB lido
     inteiro do arquivo; a skill ganhou a nota de arquivo grande.
   - 4 (reapresentação): listou as quatro reapresentações; descobriu que as v1 estão na
-    base como casca vazia (`visoes: []`), gastou 4 chamadas em erro; comparou o
+    base como casca vazia (`visoes: []`) e comparou o
     comparativo da DFP 2025 com a v2 de 2024. A skill passou a mandar conferir `visoes`
     da v1 e comparar pelo comparativo da DFP seguinte.
   - 5 (ranking): deduplicou JBS S.A. e JBS N.V., achou Metalúrgica Gerdau e Gerdau S.A.

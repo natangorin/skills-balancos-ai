@@ -1,0 +1,8 @@
+blank_issues_enabled: true
+contact_links:
+  - name: Problema no MCP ou nos dados
+    url: mailto:contato@balancos.ai
+    about: Tool com erro, valor errado ou empresa faltando é do serviço, não das skills. Escreva para o Balanços.AI.
+  - name: Vulnerabilidade
+    url: https://github.com/natangorin/skills-balancos-ai/blob/main/SECURITY.md
+    about: Não abra issue pública. Veja a política de segurança.

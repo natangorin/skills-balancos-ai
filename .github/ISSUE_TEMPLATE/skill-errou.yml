@@ -1,0 +1,54 @@
+name: Skill respondeu errado
+description: O agente, com a skill carregada, fez o que a skill manda não fazer ou não fez o que ela manda.
+title: "[skill] "
+labels: ["bug"]
+body:
+  - type: dropdown
+    id: skill
+    attributes:
+      label: Skill
+      options:
+        - balancos-ai
+        - companhia-aberta
+        - instituicao-financeira
+        - indicadores-financeiros
+        - investigar-empresa
+        - comparar-empresas
+        - due-diligence-financeira
+        - originacao-ma
+        - ler-publicacao
+    validations:
+      required: true
+  - type: input
+    id: cliente
+    attributes:
+      label: Cliente e modelo
+      placeholder: "Claude Code 2.x com Opus 5; Claude.ai; Cursor..."
+    validations:
+      required: true
+  - type: textarea
+    id: prompt
+    attributes:
+      label: Pedido feito ao agente
+      description: O prompt, do jeito que foi escrito.
+    validations:
+      required: true
+  - type: textarea
+    id: tools
+    attributes:
+      label: Tools chamadas
+      description: Nome e parâmetros de cada chamada ao MCP, na ordem. Sem a sua chave de API.
+      render: text
+  - type: textarea
+    id: saiu
+    attributes:
+      label: O que o agente respondeu
+    validations:
+      required: true
+  - type: textarea
+    id: esperado
+    attributes:
+      label: O que a skill diz que deveria acontecer
+      description: Cite o trecho da SKILL.md, se souber.
+    validations:
+      required: true

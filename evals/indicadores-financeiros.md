@@ -39,8 +39,6 @@ ativo, captações, Basileia e margem de intermediação (skill instituicao-fina
 
 ## Resultados registrados
 
-## Resultados registrados
-
 - 2026-09-17, cenário "EBITDA de companhia aberta" (Gerdau, três anos), com skill:
   passou. Um `id_doc` por exercício, 3.05 + |7.04.01|, dívida bruta − caixa −
   aplicações, visão consolidada, ressalvas de impairment e arrendamento.

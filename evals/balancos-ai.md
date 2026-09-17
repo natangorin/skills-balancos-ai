@@ -30,8 +30,6 @@ parecer, publicações para texto); cita o `dados_atualizados_em` de cada fonte.
 
 ## Resultados registrados
 
-## Resultados registrados
-
 - 2026-09-17, cenário "empresa nas três fontes" (Banrisul), com skill: passou. Roteou
   pelas três, disse qual fonte responde o quê, citou os `dados_atualizados_em` de cada
   uma, leu o parecer da CVM inteiro do arquivo e apontou a ênfase sobre comparativos

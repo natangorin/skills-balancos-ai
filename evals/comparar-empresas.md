@@ -37,8 +37,6 @@ corrente nem margem bruta.
 
 ## Resultados registrados
 
-## Resultados registrados
-
 - 2026-09-17, cenário "aberta com fechada" (Gerdau S.A. e Gerdau Aços Longos), com
   skill: passou. Percebeu que são andares do mesmo grupo, igualou a visão (individual
   da CVM contra individual das publicações), excluiu as DREs da Aços Longos por escala
