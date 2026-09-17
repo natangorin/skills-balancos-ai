@@ -34,3 +34,15 @@ consolidado de uma contra individual da outra.
 **Esperado**: tabela de bancos (ativo, carteira, captações, PL, lucro anual, ROE, Basileia)
 na mesma data-base e no nível padrão; BB via `bcb_conglomerado` para o link; sem liquidez
 corrente nem margem bruta.
+
+## Resultados registrados
+
+## Resultados registrados
+
+- 2026-09-17, cenário "aberta com fechada" (Gerdau S.A. e Gerdau Aços Longos), com
+  skill: passou. Percebeu que são andares do mesmo grupo, igualou a visão (individual
+  da CVM contra individual das publicações), excluiu as DREs da Aços Longos por escala
+  trocada e usou os valores literais da publicação rotulados.
+- 2026-09-17, cenário "bancos" (Banrisul e Banco do Brasil), com skill: passou. Tabela
+  de bancos na mesma data-base e nível padrão, quebra de era marcada, sem liquidez
+  corrente nem margem bruta.

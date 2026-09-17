@@ -26,7 +26,10 @@ banco tem vocabulário próprio (abaixo).
    fantasia, obtenha o CNPJ por `buscar_empresas` das publicações **com um trecho do nome
    oficial** ("Estado do Rio Grande do Sul"; "Banrisul" ali também devolve só subsidiárias
    e fundos) ou pelo MCP do cnpj.ai se disponível, e busque pela raiz.
-2. `bcb_analisar_instituicao(chave)`, chave = CodInst, CNPJ ou raiz. Uma chamada: ficha
+2. `bcb_analisar_instituicao(chave)`, chave = CodInst **da instituição**, CNPJ ou raiz.
+   O CodInst do conglomerado que vem em `niveis[]` e `conglomerados` **não** serve como
+   chave em nenhuma tool `bcb_*` (devolve "instituição não encontrada"): use a chave da
+   instituição e passe `nivel="prudencial"` ou `"financeiro"`. Uma chamada: ficha
    (`tipo`, `consolidado_bancario`, `segmento_prudencial`, sede, `conglomerados`,
    `niveis[]` com o CodInst de cada um e `padrao`, `ultima_data_base_resumo`), série
    `trimestres[]` do nível padrão e `resultados_anuais[]` (DRE derivada).
@@ -50,10 +53,15 @@ Campos de cada resposta em [references/payloads.md](references/payloads.md).
   `niveis[]`. Banco grande reporta pelo **prudencial**, que é o `nivel_padrao`; cooperativa
   singular e instituição independente reportam pelo individual.
 - Compare instituições no nível padrão de cada uma: `nivel="padrao"` no ranking dá uma
-  linha por grupo. Nunca some o individual ao prudencial do mesmo grupo.
-- Linhas prudenciais do ranking vêm com `cnpj` e `empresa` nulos ("ITAU - PRUDENCIAL"):
-  para chegar à empresa e ao link, `bcb_conglomerado(codinst)` lista os membros em ordem
-  de ativo, com CNPJ e link.
+  linha por grupo. Nunca some o individual ao prudencial do mesmo grupo. O prudencial
+  pode sair um pouco **menor** que o individual do banco (eliminações entre membros); não
+  é erro.
+- No ranking com `nivel="padrao"`, toda linha vem rotulada `prudencial` com `cnpj` e
+  `empresa` nulos, inclusive cooperativas e instituições independentes que na verdade
+  reportam pelo individual. Para CNPJ e link: se é banco com conglomerado real,
+  `bcb_conglomerado(codinst)` lista os membros com CNPJ e link; se é cooperativa ou
+  independente, `bcb_conglomerado` devolve zero membros, e o caminho é repetir o ranking
+  com `nivel="individual"`, que traz CNPJ e link com os mesmos valores.
 - Diga qual nível usou e o CodInst, em toda tabela.
 
 ## Tempo
@@ -115,7 +123,8 @@ Lista completa em [references/relatorios-ifdata.md](references/relatorios-ifdata
 por porte do tomador (127) e por região (126); "que tipo de crédito" com PF (123) e PJ
 (128) por modalidade e prazo; "risco" com por instrumento (130) e por indexador (125).
 Cada linha traz `formato` (`mil` = reais, `pct` = fração, `inteiro` = contagem),
-`valor` e `valor_ano_anterior`.
+`valor` e `valor_ano_anterior`. A carteira dos relatórios 123 a 130 vem do SCR e difere
+da `carteira_credito` contábil da série (o cabeçalho do IF.data avisa); diga qual usou.
 
 ## Cooperativas e sistemas
 
@@ -123,6 +132,9 @@ Cooperativa singular é `consolidado_bancario` `b3S`, tipo 9, nível individual.
 (Sicredi, Sicoob, Unicred) são centenas de CNPJs; a central e o banco do sistema aparecem
 como conglomerado. Diga qual entidade analisou e não some cooperativas por conta própria.
 Ranking de cooperativas por UF: `tipo="9"` ou `consolidado_bancario="b3S"` com `uf`.
+Centrais (`b3C`) aparecem no mesmo filtro de tipo; separe-as. A busca por nome de sistema
+("Cresol", "Unicred") devolve no máximo 20 em ordem alfabética: o universo fica truncado,
+e a resposta diz isso.
 
 ## O que o BCB não tem
 

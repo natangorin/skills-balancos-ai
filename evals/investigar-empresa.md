@@ -35,3 +35,15 @@ Banrisul."
 
 **Esperado**: memo na variante BCB, nível individual (cooperativa singular, b3S), oito
 trimestres, ROE anual, Basileia com o mínimo rotulado como conhecimento geral.
+
+## Resultados registrados
+
+## Resultados registrados
+
+- 2026-09-17, cenário "companhia aberta" (Gerdau S.A.), com skill: passou na variante
+  CVM, com todas as seções, códigos de conta, parecer e a nota do arrendamento fora de
+  2.01.04.
+- 2026-09-17, cenário "banco" (cooperativa dos empregados do Banrisul), com skill:
+  passou na variante BCB, nível individual, oito trimestres com era, ROE anual; usou o
+  cnpj.ai para sócios, como a skill permite; sinalizou um valor anômalo de TVM sem
+  corrigir.

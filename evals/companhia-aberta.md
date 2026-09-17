@@ -60,3 +60,18 @@ mesma receita, deduplica e diz; declara visão consolidada, família e que o tet
   `id_doc` 154830 e versão declarados, parecer "Sem Ressalva", individual apresentado
   como "controladora sozinha", links da empresa e das entregas, `dados_atualizados_em`
   da fonte CVM separado do de publicações.
+- 2026-09-17, cenários 2 a 5, com skill: todos passaram.
+  - 2 (EBITDA e dívida líquida): uma demonstração por chamada, cada número com código,
+    ressalva de variação cambial, e percebeu que a Gerdau lança arrendamento em "Outras
+    Obrigações" (2.01.05.02.05 e 2.02.02.02.04), fora de 2.01.04.03; a skill passou a
+    mandar procurar "arrendamento" nas descrições.
+  - 3 (parecer, Americanas S.A.): tipo "Sem Ressalva" com duas ênfases (recuperação
+    judicial e investigações), PAA separado, firma e data, resultado de 49 KB lido
+    inteiro do arquivo; a skill ganhou a nota de arquivo grande.
+  - 4 (reapresentação): listou as quatro reapresentações; descobriu que as v1 estão na
+    base como casca vazia (`visoes: []`), gastou 4 chamadas em erro; comparou o
+    comparativo da DFP 2025 com a v2 de 2024. A skill passou a mandar conferir `visoes`
+    da v1 e comparar pelo comparativo da DFP seguinte.
+  - 5 (ranking): deduplicou JBS S.A. e JBS N.V., achou Metalúrgica Gerdau e Gerdau S.A.
+    também duplicadas, marcou ano fiscal não-calendário da Raízen e a reapresentação da
+    Vale; a skill passou a citar duplicidade por controladora e controlada.

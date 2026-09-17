@@ -35,3 +35,15 @@ tese por PL, Basileia e crescimento de carteira; diz o N e a data-base.
 
 **Esperado**: `cvm_ranking_companhias` por patrimônio na família comercial, cruzando CNAE
 pela ficha; capacidade por caixa e dívida líquida do conta a conta.
+
+## Resultados registrados
+
+## Resultados registrados
+
+- 2026-09-17, cenário "cooperativas alvo" (RS), com skill: passou. Rankings por ativo,
+  carteira, lucro, PL e Basileia com `uf="RS"` e `tipo="9"`, 18 retratos, 28 chamadas;
+  dentro do corte, borda e descartadas com motivo; compradores por sistema.
+- 2026-09-17, cenário "compradores abertos" (Tupy S.A.), com skill: passou. Ranking CVM
+  por patrimônio na família comercial cruzado com rankings de publicações por setor e
+  UF, capacidade por PL e liquidez, conta a conta do alvo; 33 chamadas, acima do
+  orçamento de 30 a 40 só no limite.
