@@ -5,7 +5,7 @@ license: MIT
 compatibility: Requer o MCP do Balanços.AI (https://mcp.balancos.ai/mcp) conectado no cliente.
 metadata:
   author: Balanços.AI
-  version: "0.1"
+  version: "0.2"
 ---
 
 # Balanços.AI pelo MCP
@@ -17,15 +17,48 @@ de publicações legais: DFP na CVM (XBRL), demonstrações publicadas em jornal
 LLM) e outras fontes públicas. A base está em beta e cresce a cada carga: nem toda empresa
 está lá, nem todo ano de uma empresa, e a cobertura por setor é parcial.
 
-Três fatos que mudam toda leitura:
+Três fatos que mudam toda leitura da fonte publicações (as outras duas fontes, abaixo,
+não têm essas limitações):
 
 - **Um exercício por ano, sempre o individual.** Para cada ano fiscal a base escolhe um
-  período vencedor. Não há versão consolidada. Holding e controladora mostram a receita e
-  a dívida da própria entidade, não do grupo.
+  período vencedor. Não há versão consolidada nesta fonte. Holding e controladora mostram
+  a receita e a dívida da própria entidade, não do grupo. Se a companhia é aberta, o
+  consolidado está na fonte CVM.
 - **Valores sempre em reais**, já multiplicados pela escala do documento.
   `escala_publicada` é só proveniência. Nunca escreva "em milhares" ao apresentar.
 - **BP tem 8 linhas e DRE tem 6.** Não há caixa, empréstimos, estoques, depreciação,
-  resultado financeiro nem fluxo de caixa em campo estruturado.
+  resultado financeiro nem fluxo de caixa em campo estruturado nesta fonte. Na CVM o
+  conta a conta existe; no BCB existe carteira, captações e Basileia.
+
+## Três fontes e roteamento
+
+O MCP reúne três fontes com famílias de tools próprias. Todas aceitam CNPJ como chave.
+
+| Fonte | Quem está | O que traz | Comece por |
+|---|---|---|---|
+| Publicações (`buscar_empresas`, `analisar_empresa`...) | qualquer empresa com publicação legal | BP de 8 linhas, DRE de 6, individual, um exercício por ano, texto das publicações, ranking por UF e setor | `buscar_empresas` |
+| CVM (`cvm_*`) | companhias abertas com DFP, exercícios de 2010 em diante | consolidado e individual, conta a conta (BPA, BPP, DRE, DRA, DFC, DMPL, DVA), parecer do auditor, versões e reapresentações, ranking por exercício e família | `cvm_analisar_companhia` |
+| BCB (`bcb_*`) | instituições financeiras do IF.data, desde 2000 | série trimestral, níveis individual, financeiro e prudencial, carteira de crédito, captações, Basileia, DRE derivada, relatórios conta a conta, conglomerados, ranking por data-base, UF e tipo | `bcb_analisar_instituicao` |
+
+Roteamento, sempre nesta ordem:
+
+1. `buscar_empresas` primeiro. É a maior cobertura e devolve CNPJ e slug.
+2. Ficha com `natureza_juridica` "Sociedade Anônima Aberta", ou índice com publicações do
+   tipo "Demonstrações Financeiras Padronizadas": `cvm_buscar_companhias` com o CNPJ.
+   Achou, os números vêm da CVM; siga a skill companhia-aberta.
+3. CNAE de instituição financeira (64.21 a 64.24 bancos, caixas e cooperativas de
+   crédito; 64.3x bancos de investimento, fomento e financeiras; 64.40 arrendamento;
+   66.12 corretoras; holdings 64.6x **não** são) ou `familia: "financeira"` na CVM:
+   `bcb_buscar_instituicoes` com a raiz do CNPJ (8 dígitos). Achou, os números de banco
+   vêm do BCB; siga a skill instituicao-financeira.
+4. Publicações continuam valendo para texto de notas e relatório da administração, e para
+   quem não está nas outras duas.
+
+A ficha de publicações **não** diz se a empresa está na CVM ou no BCB; a regra acima é o
+único caminho. Uma empresa pode estar nas três (um banco listado). Precedência por
+pergunta: carteira, captações, Basileia e dado trimestral no BCB; parecer, DFC, DVA e conta
+a conta na CVM; notas explicativas e relatório da administração no texto da publicação. A
+resposta diz a fonte de cada número. Cada fonte tem o próprio `dados_atualizados_em`.
 
 ## Fluxo padrão
 
@@ -40,7 +73,7 @@ Três fatos que mudam toda leitura:
    `analisar_empresa`) e depois `texto_documento` com o id.
 5. Para "maiores de", "quem mais cresce", pares de setor: `ranking_empresas`.
 
-## As oito tools
+## As oito tools de publicações
 
 | Tool | Quando | Teto |
 |---|---|---|
@@ -56,12 +89,40 @@ Três fatos que mudam toda leitura:
 `chave` aceita slug ou CNPJ (com ou sem pontuação). Campos de cada resposta em
 [references/payloads.md](references/payloads.md).
 
+## As 21 tools de CVM e BCB
+
+Detalhes, campos e regras nas skills companhia-aberta e instituicao-financeira.
+
+| Tool | Quando |
+|---|---|
+| `cvm_buscar_companhias(termo)` | achar CNPJ, código CVM e slug de companhia aberta |
+| `cvm_ficha_companhia(chave)` | denominações, família, exercícios, entregas, último parecer, capital |
+| `cvm_analisar_companhia(chave)` | retrato: ficha, linha do tempo de entregas, BPs e DREs consolidado e individual |
+| `cvm_dfps_companhia(chave, ano?)` | entregas por exercício e versão, com `id_doc` |
+| `cvm_entrega_dfp(id_doc)` | visões e demonstrações que a entrega tem |
+| `cvm_balancos_companhia(chave, ano?, visao?)` | só os BPs |
+| `cvm_dres_companhia(chave, ano?, visao?)` | só as DREs |
+| `cvm_demonstracoes_dfp(id_doc, demonstracao?, visao?)` | conta a conta de uma demonstração |
+| `cvm_parecer_dfp(id_doc)` | tipo e texto do parecer, declarações dos diretores |
+| `cvm_ranking_companhias(metrica, ano, visao?, familia?, limite?)` | maiores companhias abertas num exercício |
+| `bcb_buscar_instituicoes(termo?, uf?, tipo?, consolidado_bancario?)` | achar CodInst e CNPJ de instituição |
+| `bcb_ficha_instituicao(chave)` | cadastro, níveis, resumo da última data-base |
+| `bcb_analisar_instituicao(chave)` | retrato: ficha, série trimestral, DRE anual derivada |
+| `bcb_trimestres_instituicao(chave, nivel?, desde?, ate?)` | série trimestral por nível e janela |
+| `bcb_resultados_instituicao(chave, nivel?, periodo?)` | DRE derivada por trimestre e ano |
+| `bcb_relatorios_instituicao(chave, nivel?, data_base?, relatorio?)` | conta a conta de um relatório |
+| `bcb_estrutura_relatorios(data_base, relatorio?)` | dicionário dos relatórios de uma data-base |
+| `bcb_conglomerado(codinst, nivel?)` | membros de um conglomerado, com links |
+| `bcb_ranking_instituicoes(metrica, data_base?, nivel?, uf?, tipo?, consolidado_bancario?, limite?)` | maiores instituições numa data-base |
+| `bcb_data_bases()` | data-bases disponíveis e era contábil |
+
 ## Como ler o dado
 
 - **`consolidado`**: quase sempre `false`. Se a ficha mostra CNAE de holding
   (`64.62-0`, `64.63-8`, "participações") ou a receita é irrisória diante do ativo, o
   número é da entidade individual e o lucro vem de equivalência patrimonial. Diga isso em
-  vez de concluir "receita despencou" ou "margem de 90%".
+  vez de concluir "receita despencou" ou "margem de 90%". Se a companhia é aberta, o
+  consolidado está na CVM: use-o (skill companhia-aberta) em vez de explicar a holding.
 - **`fonte`**: `xbrl` (DFP na CVM, estruturado) ou `llm` (lido do PDF). Em conflito no
   mesmo ano, xbrl vence. Quando comparar empresas ou anos com fontes diferentes, mostre
   a fonte.
@@ -87,7 +148,8 @@ Três fatos que mudam toda leitura:
   ativo **e** lucro operacional acima do bruto em todos os anos. Trate como holding nas
   margens, mesmo sem CNAE de holding. Lucro operacional acima do bruto num ano só, em
   empresa operacional, não é holding: é outras receitas ou equivalência naquele ano;
-  sinalize, sem interpretar.
+  sinalize, sem interpretar. Gerdau S.A. é companhia aberta: na CVM o consolidado de
+  2025 tem receita de R$ 69,9 bi, e é ele que responde "que tamanho tem".
 - **Reapresentação**: dois documentos do mesmo tipo e ano (`v2`) são versões. A base já
   escolheu; você não precisa.
 - **`exercicio` igual ao ano corrente** com `data_referencia` em junho ou setembro é ano
@@ -142,17 +204,24 @@ partir de uma frase ("caiu 15,7%") não é.
 - O documento do ano seguinte traz o ano pedido como comparativo nas notas; o do ano
   anterior pode conter um item que o corte de 50 mil deixou fora no ano corrente.
 
-## O que a base não tem
+## O que cada fonte não tem
 
-Fluxo de caixa, EBITDA, dívida bruta ou líquida, caixa, cobertura de juros, resultado
-financeiro, depreciação, estoques, contas a receber, quadro societário, controlador, ITR
-trimestral, contagem de empresas por setor, filtro por faixa de receita, paginação. Quando
-pedirem, responda o que existe, diga com todas as letras o que não existe, leia o texto da
-publicação quando ele tiver o número (proveniência 2) e aponte o link. Não estime.
+Ausente só na fonte publicações, mas presente na CVM (companhias abertas) ou no BCB
+(instituições financeiras): consolidado, DFC, caixa, empréstimos, depreciação, resultado
+financeiro, EBITDA, dívida líquida, cobertura de juros, parecer do auditor estruturado,
+reapresentações explícitas, dado trimestral (só bancos), carteira de crédito e Basileia
+(só bancos). Quando pedirem um desses para uma empresa que não está na CVM nem no BCB,
+responda o que existe, diga que não existe nesta fonte, leia o texto da publicação quando
+ele tiver o número (proveniência 2) e aponte o link. Não estime.
+
+Ausente em todas as fontes: ITR trimestral de companhia aberta, valor de mercado, quadro
+societário e controlador, notas explicativas estruturadas, protestos, rating, paginação,
+filtro por faixa de receita, contagem de empresas por setor.
 
 "Quantas empresas do setor X": não há contagem. O mais perto é `ranking_empresas` com
 `limite=50` nas quatro métricas; se voltar menos de 50, esse é o total com balanço
-carregado, e diga que é só isso.
+carregado, e diga que é só isso. Para bancos, `bcb_ranking_instituicoes` com `uf` e
+`tipo` chega mais perto de uma contagem por região.
 
 ## Ao apresentar
 
@@ -174,3 +243,6 @@ carregado, e diga que é só isso.
 | Buscar pela razão social completa | Termo curto; depois CNPJ |
 | Usar o ranking de crescimento como "quem cresce" | Filtrar `ativo_base` mínimo e dizer que é ativo total |
 | Comparar 2025 de uma com 2023 de outra | Alinhar pelo exercício e declarar buracos |
+| Explicar a Gerdau como holding quando ela está na CVM | Usar o consolidado da CVM |
+| Aplicar liquidez corrente e margem bruta a banco | Skill instituicao-financeira |
+| Buscar banco pelo nome fantasia no BCB ("Banrisul") | Raiz do CNPJ; o nome oficial é outro e fundos poluem a busca |
