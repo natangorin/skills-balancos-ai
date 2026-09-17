@@ -28,7 +28,7 @@ jobs:
             echo "v$v é nova, vai virar release"
             echo "nova=true" >> "$GITHUB_OUTPUT"
           fi
-      - uses: actions/setup-python@v5
+      - uses: actions/setup-python@v7
         if: steps.versao.outputs.nova == 'true'
         with:
           python-version: "3.12"
