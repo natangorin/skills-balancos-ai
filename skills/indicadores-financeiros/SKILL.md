@@ -5,7 +5,7 @@ license: MIT
 compatibility: Requer o MCP do Balanços.AI conectado. Assume a skill balancos-ai.
 metadata:
   author: Balanços.AI
-  version: "0.2"
+  version: "0.3"
 ---
 
 # Indicadores financeiros com o dado do Balanços.AI
@@ -83,10 +83,12 @@ captações, Basileia e resultado de intermediação (skill instituicao-financei
 Não use `lucro_operacional` como proxy de EBITDA, nem `passivo_total` como "dívida". Diga
 "passivo exigível, que inclui fornecedores, tributos e provisões" quando usar alavancagem.
 
-A **DVA** (demonstração do valor adicionado) vem antes das notas, cabe nos 50 mil
-caracteres e traz "depreciação e amortização" e "encargos de empréstimos" em linha própria;
-a DFC traz "caixa líquido das atividades operacionais" e "pagamentos de juros". Cite-as
-literalmente com o link, na escala do cabeçalho do documento.
+A **DVA** (demonstração do valor adicionado) traz "depreciação e amortização" e "encargos
+de empréstimos" em linha própria; a DFC traz "caixa líquido das atividades operacionais" e
+"pagamentos de juros". No texto da publicação, chegue a elas com `termo` em
+`texto_documento` ("valor adicionado", "depreciação", "atividades operacionais", "juros
+pagos") e leia o entorno com `inicio`. Cite-as literalmente com o link, na escala do
+cabeçalho do documento.
 
 Com valores citados do texto, é permitido montar indicador composto (EBIT da base sobre
 despesa financeira do texto; dívida bruta menos caixa do texto; EBIT mais depreciação da

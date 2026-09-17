@@ -19,11 +19,12 @@ o que não aparecer no trecho disponível fica marcado como não localizado.
 Use radicais, não expressões fechadas: a extração perde a ligadura "fi" ("inanceiro") e
 alterna singular e plural.
 
-O parecer do auditor e as notas ficam no fim do documento; com 50 mil caracteres o texto
-costuma cobrir relatório da administração, BP, DRE, DMPL, DVA, DFC e o começo da nota 1,
-às vezes menos (jornal com espaçamento de coluna). O relatório da administração traz pistas
-(itens não recorrentes, dívida, EBITDA divulgado) e serve como fonte citável. O restante
-fica marcado como fora do trecho disponível, com o link.
+O parecer do auditor e as notas ficam no fim do documento (relatório da administração,
+BP, DRE, DMPL, DVA, DFC, notas, relatório do auditor). Cada linha da tabela é uma busca
+por `termo` em `texto_documento`, um termo por chamada; o entorno de um trecho se lê com
+`inicio` na posição devolvida. O relatório da administração traz pistas (itens não
+recorrentes, dívida, EBITDA divulgado) e serve como fonte citável. Assunto sem ocorrência
+em dois termos fica marcado como não encontrado no documento, com o link.
 
 Em companhia aberta, o que a quarta coluna aponta é proveniência 1 (da base): não precisa
 do texto nem do rótulo "segundo a publicação". O que ela marca como "só no texto" segue o

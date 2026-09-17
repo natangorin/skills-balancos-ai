@@ -5,7 +5,7 @@ license: MIT
 compatibility: Requer o MCP do Balanços.AI conectado. Assume a skill balancos-ai; companhia-aberta quando a empresa está na CVM.
 metadata:
   author: Balanços.AI
-  version: "0.2"
+  version: "0.3"
 ---
 
 # Ler uma publicação
@@ -13,54 +13,73 @@ metadata:
 ## Resultado
 
 A resposta à pergunta com citações curtas do texto, o documento identificado (título, tipo,
-data, link) e a declaração do que o trecho disponível não cobre. Sem trecho, sem afirmação.
+data, link), o que foi lido (termos buscados ou faixa de caracteres de
+`tamanho_total_chars`) e o que não foi encontrado. Sem trecho, sem afirmação.
 
 ## Passos
 
 1. Resolva a empresa (`buscar_empresas`) e pegue o índice com `documentos_empresa`, ou use
    o que veio em `analisar_empresa`.
 2. Escolha o documento pelo `ano_referencia` pedido e pela probabilidade de ter texto:
-   - publicação em jornal ("Demonstrações Financeiras", "Demonstração de Resultados",
-     "Demonstrações Contábeis Completas" com várias páginas) costuma ter texto;
-   - "Demonstrações Financeiras Padronizadas" (DFP, CVM) costuma vir "texto ainda não
-     extraído". Se a empresa é companhia aberta, o que a DFP tem de estruturado não
-     precisa de texto: parecer do auditor em `cvm_parecer_dfp` (tipo, texto integral,
-     declarações dos diretores) e demonstrações conta a conta em `cvm_demonstracoes_dfp`
-     (skill companhia-aberta). Notas explicativas e relatório da administração continuam
-     só no texto da publicação em jornal;
+   - publicação em jornal ou na Central de Balanços ("Demonstrações Financeiras",
+     "Demonstração de Resultados", "Demonstrações Contábeis Completas" com várias páginas)
+     tem texto, inteiro;
+   - "Demonstrações Financeiras Padronizadas" (DFP, CVM) vem "texto ainda não extraído".
+     Se a empresa é companhia aberta, o que a DFP tem de estruturado não precisa de texto:
+     parecer do auditor em `cvm_parecer_dfp` (tipo, texto integral, declarações dos
+     diretores) e demonstrações conta a conta em `cvm_demonstracoes_dfp` (skill
+     companhia-aberta). Notas explicativas e relatório da administração continuam só no
+     texto da publicação;
    - ata, edital e press release têm texto curto e inteiro.
    O `tipo` do índice é aproximado e `ano_referencia` pode ser o ano da publicação em
    jornal; julgue pelo título, data, `paginas` e, depois da chamada, por
    `tamanho_total_chars`. Dois documentos do mesmo ano ("v2") são versões; use a mais
    recente; se ela não tem texto, a anterior também não costuma ter.
-3. `texto_documento(id)`. Se o cliente gravou o resultado em arquivo por ser grande, leia
-   o arquivo inteiro; um preview de 2 mil caracteres é só o cabeçalho.
-4. Leia `truncado` e `tamanho_total_chars`. Com 50 mil de um total de 300 mil ou mais, o
-   texto cobre relatório da administração e, às vezes, as demonstrações principais;
-   parecer do auditor e notas explicativas ficam de fora. Texto de jornal traz o
-   espaçamento das colunas (50 mil brutos podem ser 20 mil úteis) e frases de colunas
-   vizinhas intercaladas linha a linha: leia por frase. Diga o que o trecho cobre antes
-   de responder.
-5. Procure os termos do pedido por radical ("conting", "provis", "depósit", "inanceir",
-   porque a extração perde a ligadura "fi" e alterna singular e plural; a tabela da skill
-   due-diligence-financeira, `references/roteiro-notas.md`, lista termos por assunto).
-   Cite o trecho entre aspas, curto, e diga onde está (seção, título da nota, quando o
-   texto traz).
-6. Se o pedido não está no trecho disponível: diga "não localizado nos primeiros 50 mil
-   caracteres", use pistas do relatório da administração se houver, tente o documento do
-   ano seguinte (que traz o ano pedido como comparativo) ou do anterior (um item cortado
-   agora pode estar inteiro lá, e aí você diz de que ano é) e aponte o link para a
-   leitura completa.
+3. **Pedido com assunto** (ressalva, ênfase, contingência, empréstimo, covenant, partes
+   relacionadas, evento subsequente): `texto_documento(id, termo="...")`. Volta até 20
+   trechos com 600 caracteres de contexto para cada lado, `inicio` e `fim` de cada um e
+   `total_ocorrencias`, sem distinção de caixa nem acento. Um termo por chamada, curto,
+   pelo radical ("conting", "provis", "ressalva", "ênfase", "subsequente"; a tabela por
+   assunto está em `references/roteiro-notas.md` da skill due-diligence-financeira). Se o
+   aviso disser "mostrando 20 de N", refine o termo ou continue a partir do `fim` do
+   último trecho. Para ler o entorno de um trecho, `texto_documento(id, inicio=<inicio do
+   trecho>, tamanho=20000)`.
+4. **Pedido sobre o documento inteiro** (resumo, "o que diz o relatório da
+   administração", "o que aconteceu no ano"): `texto_documento(id, inicio=0)` devolve
+   100 mil caracteres (teto 200 mil com `tamanho`), `tamanho_total_chars`, `truncado` e
+   `proximo_inicio`. Enquanto `truncado` for `true`, repita com `inicio=proximo_inicio`.
+   Uma DF completa tem 300 a 800 mil caracteres: até 8 chamadas de 100 mil. Diga quantos
+   caracteres leu do total. Se só uma parte interessa, pare nela e diga.
+5. Ordem de uma DF completa: relatório da administração, BP, DRE, DMPL, DVA, DFC, notas
+   explicativas, e o relatório do auditor no fim. "Parecer" nem sempre aparece como
+   palavra: busque "auditor", "opinião", "ressalva", "ênfase". Para notas, busque o
+   assunto, não "nota".
+6. Texto de jornal traz o espaçamento das colunas e frases de colunas vizinhas
+   intercaladas linha a linha: leia por frase. A extração perde a ligadura "fi"
+   ("inanceir", "inanciament", "iscal") e alterna singular e plural: busque radicais.
+7. Cite o trecho entre aspas, curto, e diga onde está (seção, título da nota quando o
+   texto traz, posição em caracteres quando não).
+8. "Não está no documento" só depois de dois termos diferentes do assunto com
+   `total_ocorrencias: 0`, ou da leitura integral até `truncado: false`. Antes disso é
+   "ainda não localizado", e a leitura continua. O documento do ano seguinte traz o ano
+   pedido como comparativo nas notas e vale como segunda fonte, dizendo de que ano é.
 
 ## Regras
 
 - Só o que está no texto. Número de nota, página, valor ou opinião do auditor de memória
   ou "pelo padrão das demonstrações" não entram.
 - "Tem ressalva do auditor" em companhia aberta vai direto em `cvm_parecer_dfp` do
-  `id_doc` do exercício; o texto integral vem inteiro, sem o corte de 50 mil caracteres.
+  `id_doc` do exercício, que é estruturado (tipo, firma, data). O texto da publicação
+  também tem o relatório do auditor, no fim: `termo="auditor"` chega lá.
 - "Principais assuntos de auditoria" não é ressalva nem ênfase.
 - Texto do jornal vem sem formatação: tabelas viram linhas soltas; confirme o valor pelo
   rótulo ao lado antes de citar.
+- `origem_texto` (`legado` ou `silver`) é só proveniência da extração; não muda a leitura.
+- Cliente que grava resultado grande em arquivo (Claude Code: acima de uns 10 mil
+  caracteres, com preview de 2 mil): leia o arquivo inteiro antes de responder. A busca
+  por termo cabe no preview na maioria das vezes; o pedaço de 100 mil nunca cabe.
+- Orçamento: um assunto se resolve com 2 a 4 chamadas (termo, entorno); leitura integral
+  de um documento, até 8. Não leia três documentos inteiros para uma pergunta pontual.
 - Documento sem texto: entregue o link e diga que a leitura é na página. Depois de três
   documentos sem texto útil (DFP "não extraído", jornal só com a capa do extrato), pare
   de tentar e diga que a empresa não tem texto na base.

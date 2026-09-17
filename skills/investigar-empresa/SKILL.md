@@ -5,7 +5,7 @@ license: MIT
 compatibility: Requer o MCP do Balanços.AI conectado. Assume as skills balancos-ai e indicadores-financeiros; companhia-aberta e instituicao-financeira quando a empresa está na CVM ou no BCB.
 metadata:
   author: Balanços.AI
-  version: "0.2"
+  version: "0.3"
 ---
 
 # Investigar uma empresa
@@ -63,8 +63,10 @@ que é interpretação:
 5. Calcule os indicadores com as fórmulas da skill indicadores-financeiros.
 6. Se o pedido incluir "o que publicou" ou "o que aconteceu", leia o texto da publicação
    mais recente com `texto_documento` (a publicação em jornal costuma ter texto; a DFP
-   costuma não ter). Se o resultado vier gravado em arquivo, leia o arquivo inteiro. Cite
-   só o que está no texto, entre aspas curtas, com o link.
+   não tem): por `termo` quando o pedido tem assunto, em pedaços com `inicio` e
+   `proximo_inicio` quando é o relatório inteiro (skill ler-publicacao). Se o resultado
+   vier gravado em arquivo, leia o arquivo inteiro. Cite só o que está no texto, entre
+   aspas curtas, com o link.
 7. Escreva o memo.
 
 ## Regras

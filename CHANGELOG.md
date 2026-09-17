@@ -5,6 +5,32 @@ corresponde à `metadata.version` `X.Y` das skills que mudaram. A seção mais r
 topo define a versão: no merge na `main`, se a tag dela não existe, a release sai sozinha. Formato inspirado em
 [Keep a Changelog](https://keepachangelog.com/pt-BR/1.1.0/).
 
+## [0.3.0] - 2026-09-17
+
+O MCP 0.3.0 passou a entregar o texto integral das publicações: `texto_documento` ganhou
+`inicio`, `tamanho` e `termo`, e o corte de 50 mil caracteres acabou. As skills que liam
+texto foram reescritas em cima disso.
+
+### Alterado
+
+- `ler-publicacao`: fluxo novo. Pedido com assunto vai por `termo` (até 20 trechos com
+  contexto e posição), entorno com `inicio`; pedido sobre o documento inteiro vai em
+  pedaços com `proximo_inicio` até `truncado: false`. "Não está no documento" só depois
+  de dois termos sem ocorrência ou da leitura integral. Orçamento de chamadas por tipo de
+  pedido e nota sobre resultado gravado em arquivo no Claude Code.
+- `balancos-ai`: tabela de tools, payload de `texto_documento` em `references/payloads.md`
+  (dois modos, `origem_texto`), seção "Texto de publicações" e novo erro comum.
+- `due-diligence-financeira`: roteiro de notas vira uma busca por `termo` por assunto;
+  item ausente só depois de dois termos sem ocorrência.
+- `indicadores-financeiros`: DVA e DFC no texto localizadas por `termo`.
+- `investigar-empresa`: leitura do relatório por `termo` ou em pedaços.
+- README: limitação dos 50 mil caracteres removida.
+
+### Removido
+
+- Instruções de contorno do corte de 50 mil caracteres (ler a publicação do ano anterior
+  para pegar o que ficou fora, "não localizado nos primeiros 50 mil").
+
 ## [0.2.0] - 2026-09-17
 
 O MCP passou a expor três fontes: publicações legais, CVM (companhias abertas) e BCB
@@ -57,5 +83,6 @@ Primeira versão pública do conjunto, escrita a partir dos baselines de sete ce
 - `scripts/check.py` e CI com `make check`.
 - Plugin do Claude Code com o MCP configurado.
 
+[0.3.0]: https://github.com/natangorin/skills-balancos-ai/releases/tag/v0.3.0
 [0.2.0]: https://github.com/natangorin/skills-balancos-ai/releases/tag/v0.2.0
 [0.1.0]: https://github.com/natangorin/skills-balancos-ai/tree/14d0e05

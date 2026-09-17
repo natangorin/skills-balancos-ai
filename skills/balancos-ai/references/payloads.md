@@ -54,16 +54,32 @@ Tipos frequentes: "Demonstrações Financeiras Padronizadas" (DFP, CVM), "Demons
 Resultados", "Notas Explicativas", "Ata de AGO", "Ata de AGE", "Press Release",
 "Apresentação de Resultados", "Demonstrações Contábeis Completas".
 
-## texto_documento(documento_id)
+## texto_documento(documento_id, inicio?, tamanho?, termo?)
 
-Resposta grande: clientes como o Claude Code gravam o resultado em arquivo e mostram só um
-preview de 2 mil caracteres. Leia o arquivo inteiro.
+Dois modos. Sem `termo`, um pedaço do texto: `inicio` (padrão 0), `tamanho` (padrão
+100.000, teto 200.000). Com `termo`, só os trechos que contêm o termo, sem o campo `texto`.
+Um pedaço é grande: clientes como o Claude Code gravam o resultado em arquivo e mostram só
+um preview de 2 mil caracteres; leia o arquivo inteiro.
 
 ```
 documento: id, titulo, tipo, publicado_em, link
-texto (até 50.000 caracteres), truncado (bool), tamanho_total_chars, aviso
+origem_texto ("legado" | "silver"; só proveniência da extração)
+tamanho_total_chars
+
+sem termo:
+inicio, fim, texto, truncado (bool: o pedaço não chegou ao fim)
+proximo_inicio (só quando truncado; igual a fim), aviso (só quando truncado)
+
+com termo:
+termo, trechos[] (até 20): inicio, fim, texto (600 caracteres de contexto para cada lado;
+    ocorrências vizinhas colapsam num trecho), total_ocorrencias
+dica (quando total_ocorrencias = 0), aviso (quando há mais ocorrências que trechos)
+
 erro ("Texto ainda não extraído para este documento — ...") quando não há texto
 ```
+
+Busca sem distinção de caixa nem acento; as posições valem no texto original. Laço de
+leitura integral: `inicio=0`, depois `inicio=proximo_inicio` enquanto `truncado`.
 
 ## ranking_empresas(metrica, uf?, setor?, limite?)
 
