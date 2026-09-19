@@ -5,7 +5,7 @@ license: MIT
 compatibility: Requer o MCP do Balanços.AI conectado. Assume a skill balancos-ai; companhia-aberta quando a empresa está na CVM.
 metadata:
   author: Balanços.AI
-  version: "0.3"
+  version: "0.4"
 ---
 
 # Ler uma publicação
@@ -24,12 +24,13 @@ data, link), o que foi lido (termos buscados ou faixa de caracteres de
    - publicação em jornal ou na Central de Balanços ("Demonstrações Financeiras",
      "Demonstração de Resultados", "Demonstrações Contábeis Completas" com várias páginas)
      tem texto, inteiro;
-   - "Demonstrações Financeiras Padronizadas" (DFP, CVM) vem "texto ainda não extraído".
-     Se a empresa é companhia aberta, o que a DFP tem de estruturado não precisa de texto:
-     parecer do auditor em `cvm_parecer_dfp` (tipo, texto integral, declarações dos
-     diretores) e demonstrações conta a conta em `cvm_demonstracoes_dfp` (skill
-     companhia-aberta). Notas explicativas e relatório da administração continuam só no
-     texto da publicação;
+   - "Demonstrações Financeiras Padronizadas" (DFP, CVM) e "Informações Trimestrais"
+     (ITR, CVM, título "ITR dd/mm/aaaa") vêm "texto ainda não extraído". Se a empresa é
+     companhia aberta, o que a entrega tem de estruturado não precisa de texto: parecer
+     do auditor em `cvm_parecer` (tipo, texto integral, declarações dos diretores; no ITR,
+     relatório de revisão especial) e demonstrações conta a conta em `cvm_demonstracoes`,
+     com o `id_doc` de `cvm_entregas_companhia` (skill companhia-aberta). Notas
+     explicativas e relatório da administração continuam só no texto da publicação;
    - ata, edital e press release têm texto curto e inteiro.
    O `tipo` do índice é aproximado e `ano_referencia` pode ser o ano da publicação em
    jornal; julgue pelo título, data, `paginas` e, depois da chamada, por
@@ -76,9 +77,11 @@ data, link), o que foi lido (termos buscados ou faixa de caracteres de
 
 - Só o que está no texto. Número de nota, página, valor ou opinião do auditor de memória
   ou "pelo padrão das demonstrações" não entram.
-- "Tem ressalva do auditor" em companhia aberta vai direto em `cvm_parecer_dfp` do
-  `id_doc` do exercício, que é estruturado (tipo, firma, data). O texto da publicação
-  também tem o relatório do auditor, no fim: `termo="auditor"` chega lá.
+- "Tem ressalva do auditor" em companhia aberta vai direto em `cvm_parecer` do `id_doc`
+  da DFP do exercício, que é estruturado (tipo, firma, data). O do ITR é revisão, não
+  opinião: serve para ênfase ou ressalva surgida depois do exercício, dito assim. O
+  texto da publicação também tem o relatório do auditor, no fim: `termo="auditor"` chega
+  lá.
 - "Principais assuntos de auditoria" não é ressalva nem ênfase.
 - Texto do jornal vem sem formatação: tabelas viram linhas soltas; confirme o valor pelo
   rótulo ao lado antes de citar.
@@ -95,8 +98,8 @@ data, link), o que foi lido (termos buscados ou faixa de caracteres de
 - Orçamento: um assunto se resolve com 2 a 4 chamadas (termo, entorno); leitura integral
   de um documento, até 8. Não leia três documentos inteiros para uma pergunta pontual.
 - Documento sem texto: entregue o link e diga que a leitura é na página. Depois de três
-  documentos sem texto útil (DFP "não extraído", jornal só com a capa do extrato), pare
-  de tentar e diga que a empresa não tem texto na base.
+  documentos sem texto útil (DFP ou ITR "não extraído", jornal só com a capa do
+  extrato), pare de tentar e diga que a empresa não tem texto na base.
 
 ## Quando o dado não existe
 

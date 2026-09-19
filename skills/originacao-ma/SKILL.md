@@ -5,7 +5,7 @@ license: MIT
 compatibility: Requer o MCP do Balanços.AI conectado. Assume as skills balancos-ai e indicadores-financeiros; companhia-aberta e instituicao-financeira para alvos e compradores abertos ou financeiros.
 metadata:
   author: Balanços.AI
-  version: "0.2"
+  version: "0.4"
 ---
 
 # Originação de M&A
@@ -30,7 +30,8 @@ não tem" e uma "de conhecimento geral, não confirmado na base".
    ("Energia Elétrica"), rode o herdado por receita em cada UF; se voltar alguém, rode
    por ativo também.
    Companhias abertas do setor: `cvm_ranking_companhias` por `receita` e por `ativo` no
-   último exercício, `familia="comercial"`, `visao="consolidado"`, `limite=50`; não há
+   último exercício, `familia="comercial"`, `visao="consolidado"`, `limite=50`, e por
+   `receita` com `periodo="12m"` para o corte de receita mais atual; não há
    UF nem setor, então cruze CNAE e UF pela `ficha_empresa` e diga que o corte foi do lado
    do agente. Instituições financeiras: `bcb_ranking_instituicoes` por `ativo` e por
    `carteira` com `uf`, `tipo` ou `consolidado_bancario`, no nível padrão; é o único

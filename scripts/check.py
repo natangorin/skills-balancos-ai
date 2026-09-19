@@ -31,16 +31,18 @@ TOOLS_DO_MCP = {
     "texto_documento",
     "ranking_empresas",
     "analisar_empresa",
-    # CVM (companhias abertas, DFP)
+    # CVM (companhias abertas, DFP e ITR)
     "cvm_buscar_companhias",
     "cvm_ficha_companhia",
     "cvm_analisar_companhia",
-    "cvm_dfps_companhia",
-    "cvm_entrega_dfp",
+    "cvm_entregas_companhia",
+    "cvm_entrega",
     "cvm_balancos_companhia",
     "cvm_dres_companhia",
-    "cvm_demonstracoes_dfp",
-    "cvm_parecer_dfp",
+    "cvm_trimestres_companhia",
+    "cvm_resultados_companhia",
+    "cvm_demonstracoes",
+    "cvm_parecer",
     "cvm_ranking_companhias",
     # BCB (instituições financeiras, IF.data)
     "bcb_buscar_instituicoes",

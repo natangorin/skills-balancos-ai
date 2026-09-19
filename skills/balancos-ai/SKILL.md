@@ -5,7 +5,7 @@ license: MIT
 compatibility: Requer o MCP do Balanços.AI (https://mcp.balancos.ai/mcp) conectado no cliente.
 metadata:
   author: Balanços.AI
-  version: "0.3"
+  version: "0.4"
 ---
 
 # Balanços.AI pelo MCP
@@ -37,14 +37,15 @@ O MCP reúne três fontes com famílias de tools próprias. Todas aceitam CNPJ c
 | Fonte | Quem está | O que traz | Comece por |
 |---|---|---|---|
 | Publicações (`buscar_empresas`, `analisar_empresa`...) | qualquer empresa com publicação legal | BP de 8 linhas, DRE de 6, individual, um exercício por ano, texto das publicações, ranking por UF e setor | `buscar_empresas` |
-| CVM (`cvm_*`) | companhias abertas com DFP, exercícios de 2010 em diante | consolidado e individual, conta a conta (BPA, BPP, DRE, DRA, DFC, DMPL, DVA), parecer do auditor, versões e reapresentações, ranking por exercício e família | `cvm_analisar_companhia` |
+| CVM (`cvm_*`) | companhias abertas: DFP de 2010 em diante, ITR de 2011 em diante | consolidado e individual, conta a conta (BPA, BPP, DRE, DRA, DFC, DMPL, DVA) da DFP e do ITR, série trimestral com trimestre, acumulado e últimos doze meses, parecer do auditor, versões e reapresentações, ranking por exercício ou por doze meses e família | `cvm_analisar_companhia` |
 | BCB (`bcb_*`) | instituições financeiras do IF.data, desde 2000 | série trimestral, níveis individual, financeiro e prudencial, carteira de crédito, captações, Basileia, DRE derivada, relatórios conta a conta, conglomerados, ranking por data-base, UF e tipo | `bcb_analisar_instituicao` |
 
 Roteamento, sempre nesta ordem:
 
 1. `buscar_empresas` primeiro. É a maior cobertura e devolve CNPJ e slug.
 2. Ficha com `natureza_juridica` "Sociedade Anônima Aberta", ou índice com publicações do
-   tipo "Demonstrações Financeiras Padronizadas": `cvm_buscar_companhias` com o CNPJ.
+   tipo "Demonstrações Financeiras Padronizadas" ou "Informações Trimestrais":
+   `cvm_buscar_companhias` com o CNPJ.
    Achou, os números vêm da CVM; siga a skill companhia-aberta.
 3. CNAE de instituição financeira (64.21 a 64.24 bancos, caixas e cooperativas de
    crédito; 64.3x bancos de investimento, fomento e financeiras; 64.40 arrendamento;
@@ -56,9 +57,10 @@ Roteamento, sempre nesta ordem:
 
 A ficha de publicações **não** diz se a empresa está na CVM ou no BCB; a regra acima é o
 único caminho. Uma empresa pode estar nas três (um banco listado). Precedência por
-pergunta: carteira, captações, Basileia e dado trimestral no BCB; parecer, DFC, DVA e conta
-a conta na CVM; notas explicativas e relatório da administração no texto da publicação. A
-resposta diz a fonte de cada número. Cada fonte tem o próprio `dados_atualizados_em`.
+pergunta: carteira, captações, Basileia e trimestre de banco no BCB; trimestre e últimos
+doze meses de companhia aberta, parecer, DFC, DVA e conta a conta na CVM; notas
+explicativas e relatório da administração no texto da publicação. A resposta diz a fonte
+de cada número. Cada fonte tem o próprio `dados_atualizados_em`.
 
 ## Fluxo padrão
 
@@ -89,7 +91,7 @@ resposta diz a fonte de cada número. Cada fonte tem o próprio `dados_atualizad
 `chave` aceita slug ou CNPJ (com ou sem pontuação). Campos de cada resposta em
 [references/payloads.md](references/payloads.md).
 
-## As 21 tools de CVM e BCB
+## As 22 tools de CVM e BCB
 
 Detalhes, campos e regras nas skills companhia-aberta e instituicao-financeira.
 
@@ -97,14 +99,16 @@ Detalhes, campos e regras nas skills companhia-aberta e instituicao-financeira.
 |---|---|
 | `cvm_buscar_companhias(termo)` | achar CNPJ, código CVM e slug de companhia aberta |
 | `cvm_ficha_companhia(chave)` | denominações, família, exercícios, entregas, último parecer, capital |
-| `cvm_analisar_companhia(chave)` | retrato: ficha, linha do tempo de entregas, BPs e DREs consolidado e individual |
-| `cvm_dfps_companhia(chave, ano?)` | entregas por exercício e versão, com `id_doc` |
-| `cvm_entrega_dfp(id_doc)` | visões e demonstrações que a entrega tem |
-| `cvm_balancos_companhia(chave, ano?, visao?)` | só os BPs |
-| `cvm_dres_companhia(chave, ano?, visao?)` | só as DREs |
-| `cvm_demonstracoes_dfp(id_doc, demonstracao?, visao?)` | conta a conta de uma demonstração |
-| `cvm_parecer_dfp(id_doc)` | tipo e texto do parecer, declarações dos diretores |
-| `cvm_ranking_companhias(metrica, ano, visao?, familia?, limite?)` | maiores companhias abertas num exercício |
+| `cvm_analisar_companhia(chave)` | retrato: ficha, linha do tempo das DFPs, BPs e DREs anuais consolidado e individual, ponto trimestral mais recente |
+| `cvm_trimestres_companhia(chave, desde?, ate?, visao?)` | série trimestral: BP, trimestre, acumulado e últimos doze meses |
+| `cvm_resultados_companhia(chave, periodo?, desde?, ate?, visao?)` | DRE da série num período (trimestre, acumulado, 12m, anual) |
+| `cvm_entregas_companhia(chave, tipo?, ano?)` | entregas de DFP ou ITR por data e versão, com `id_doc` |
+| `cvm_entrega(id_doc)` | visões e demonstrações que a entrega (DFP ou ITR) tem |
+| `cvm_balancos_companhia(chave, ano?, visao?)` | só os BPs anuais |
+| `cvm_dres_companhia(chave, ano?, visao?)` | só as DREs anuais |
+| `cvm_demonstracoes(id_doc, demonstracao?, visao?)` | conta a conta de uma demonstração da DFP ou do ITR |
+| `cvm_parecer(id_doc)` | parecer (DFP) ou revisão (ITR) do auditor, declarações dos diretores |
+| `cvm_ranking_companhias(metrica, ano?, periodo?, data_referencia?, visao?, familia?, limite?)` | maiores companhias abertas num exercício ou nos últimos doze meses |
 | `bcb_buscar_instituicoes(termo?, uf?, tipo?, consolidado_bancario?)` | achar CodInst e CNPJ de instituição |
 | `bcb_ficha_instituicao(chave)` | cadastro, níveis, resumo da última data-base |
 | `bcb_analisar_instituicao(chave)` | retrato: ficha, série trimestral, DRE anual derivada |
@@ -200,8 +204,8 @@ partir de uma frase ("caiu 15,7%") não é.
   perde a ligadura "fi": procure "inanceir", "inanciament", "iscal".
 - `ano_referencia` em publicação de jornal pode ser o ano da publicação, não do
   exercício ("DFs de 2025" com `ano_referencia: 2026`); confira pelo título e pela data.
-- DFPs da CVM costumam vir como "texto ainda não extraído". A publicação em jornal do
-  mesmo exercício costuma ter texto. Prefira ela.
+- DFPs e ITRs ("Informações Trimestrais") da CVM vêm como "texto ainda não extraído".
+  A publicação em jornal do mesmo exercício costuma ter texto. Prefira ela.
 - O `tipo` do índice é aproximado: "Demonstração de Resultados" com 10 páginas e centenas
   de milhares de caracteres é a DF completa. Julgue pelo título, páginas e tamanho.
 - Se o cliente gravou o resultado da tool em arquivo por ser grande, leia o arquivo
@@ -214,14 +218,14 @@ partir de uma frase ("caiu 15,7%") não é.
 Ausente só na fonte publicações, mas presente na CVM (companhias abertas) ou no BCB
 (instituições financeiras): consolidado, DFC, caixa, empréstimos, depreciação, resultado
 financeiro, EBITDA, dívida líquida, cobertura de juros, parecer do auditor estruturado,
-reapresentações explícitas, dado trimestral (só bancos), carteira de crédito e Basileia
-(só bancos). Quando pedirem um desses para uma empresa que não está na CVM nem no BCB,
-responda o que existe, diga que não existe nesta fonte, leia o texto da publicação quando
-ele tiver o número (proveniência 2) e aponte o link. Não estime.
+reapresentações explícitas, dado trimestral e últimos doze meses, carteira de crédito e
+Basileia (só bancos). Quando pedirem um desses para uma empresa que não está na CVM nem
+no BCB, responda o que existe, diga que não existe nesta fonte, leia o texto da
+publicação quando ele tiver o número (proveniência 2) e aponte o link. Não estime.
 
-Ausente em todas as fontes: ITR trimestral de companhia aberta, valor de mercado, quadro
-societário e controlador, notas explicativas estruturadas, protestos, rating, paginação,
-filtro por faixa de receita, contagem de empresas por setor.
+Ausente em todas as fontes: valor de mercado, quadro societário e controlador, notas
+explicativas estruturadas, protestos, rating, paginação, filtro por faixa de receita,
+contagem de empresas por setor.
 
 "Quantas empresas do setor X": não há contagem. O mais perto é `ranking_empresas` com
 `limite=50` nas quatro métricas; se voltar menos de 50, esse é o total com balanço
@@ -250,5 +254,7 @@ carregado, e diga que é só isso. Para bancos, `bcb_ranking_instituicoes` com `
 | Usar o ranking de crescimento como "quem cresce" | Filtrar `ativo_base` mínimo e dizer que é ativo total |
 | Comparar 2025 de uma com 2023 de outra | Alinhar pelo exercício e declarar buracos |
 | Explicar a Gerdau como holding quando ela está na CVM | Usar o consolidado da CVM |
+| Tool `cvm_*` desta skill não aparece no cliente, ou aparecem nomes terminados em "_dfp" | O cliente guardou a lista de tools de antes do MCP 0.4: peça para reconectar o MCP |
+| Citar a DFP do ano passado como o dado atual de companhia aberta | `trimestral.mais_recente` ou `cvm_trimestres_companhia`, com a data de referência |
 | Aplicar liquidez corrente e margem bruta a banco | Skill instituicao-financeira |
 | Buscar banco pelo nome fantasia no BCB ("Banrisul") | Raiz do CNPJ; o nome oficial é outro e fundos poluem a busca |

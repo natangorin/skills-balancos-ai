@@ -5,7 +5,7 @@ license: MIT
 compatibility: Requer o MCP do Balanços.AI conectado. Assume as skills balancos-ai, indicadores-financeiros e ler-publicacao; companhia-aberta e instituicao-financeira quando a contraparte está na CVM ou no BCB.
 metadata:
   author: Balanços.AI
-  version: "0.3"
+  version: "0.4"
 ---
 
 # Due diligence financeira
@@ -26,19 +26,22 @@ Um relatório de evidências, não um parecer. Seções fixas, nesta ordem:
    4,7 vezes o circulante" e não "risco baixo".
 4. **Sinais que exigem leitura da nota**: reclassificação de dívida entre circulante e
    não circulante, prejuízo recorrente, PL em queda, margem operacional acima da bruta,
-   ausência de publicação recente, reapresentação de DFP (linha do tempo de entregas da
-   CVM, com data e se o parecer mudou). Um item por linha, com o número que o originou.
-5. **O que o parecer e o texto dizem**: em companhia aberta, o parecer vem estruturado
-   de `cvm_parecer_dfp` (tipo, ênfase e continuidade lidas no texto, firma, data, e se a
-   firma mudou entre exercícios); nas demais, parecer do auditor no texto da publicação
-   (opinião, ênfase, ressalva); empréstimos e vencimentos, contingências, partes relacionadas, eventos subsequentes,
-   continuidade operacional. Citação curta e link. Item não encontrado no texto disponível
-   fica marcado "não localizado no trecho disponível", com o link.
+   ausência de publicação recente, reapresentação de DFP ou ITR (linha do tempo de
+   entregas da CVM, com data e se o parecer mudou), trimestres que não fecham com o
+   acumulado na fonte (`consistente: false` na série da CVM). Um item por linha, com o
+   número que o originou.
+5. **O que o parecer e o texto dizem**: em companhia aberta, o parecer vem estruturado de
+   `cvm_parecer` da DFP (tipo, ênfase e continuidade lidas no texto, firma, data, e se a
+   firma mudou entre exercícios), e a revisão do ITR mais recente diz se surgiu ênfase
+   depois; nas demais, parecer do auditor no texto da publicação (opinião, ênfase,
+   ressalva); empréstimos e vencimentos, contingências, partes relacionadas, eventos
+   subsequentes, continuidade operacional. Citação curta e link. Item não encontrado no
+   texto disponível fica marcado "não localizado no trecho disponível", com o link.
 6. **O que a base não tem** para esta decisão: fluxo de caixa, dívida líquida, caixa,
    prazo médio de pagamento, protestos, rating, quadro societário, dado intra-ano (exceto
-   banco: o IF.data tem o trimestre mais recente, e ele entra na seção 3). Se o último
-   exercício tem mais de seis meses, diga quantos e inclua na seção 7 o pedido de
-   balancete ou ITR recente.
+   banco e companhia aberta: o IF.data e o ITR têm o trimestre mais recente, e ele entra
+   na seção 3 com a data de referência). Se o dado mais recente tem mais de seis meses,
+   diga quantos e inclua na seção 7 o pedido de balancete recente.
 7. **Perguntas à contraparte** derivadas dos itens 4, 5 e 6: uma pergunta por lacuna.
 8. **Modo** (fornecedor e cliente, aquisição, investimento) ajusta o foco, ver abaixo.
 
@@ -54,20 +57,23 @@ o que o texto diz, e o que falta. Não a deixe implícita entre as seções.
 
 1. `buscar_empresas`; confirme a contraparte pelo CNPJ e liste homônimos.
 2. `analisar_empresa`, e depois o roteamento da skill balancos-ai: companhia aberta,
-   `cvm_analisar_companhia` e o conta a conta de BPP, DRE e DFC do último exercício
-   (skill companhia-aberta); banco, `bcb_analisar_instituicao` (skill
-   instituicao-financeira). Classifique a natureza do dado e monte a série com a skill
-   indicadores-financeiros, excluindo anomalias com nota.
+   `cvm_analisar_companhia` e o conta a conta de BPP, DRE e DFC do último exercício; se
+   `trimestral.mais_recente` é posterior, a seção 3 ganha uma coluna com o BP do ITR e os
+   resultados de doze meses, e a dívida sai do BPP desse ITR (skill companhia-aberta);
+   banco, `bcb_analisar_instituicao` (skill instituicao-financeira). Classifique a
+   natureza do dado e monte a série com a skill indicadores-financeiros, excluindo
+   anomalias com nota.
 3. Marque os sinais da seção 4 comparando exercícios.
-4. Em companhia aberta, `cvm_parecer_dfp` da última entrega e da anterior antes de
-   qualquer texto. Depois, leia texto: no índice de documentos, escolha a publicação mais
-   recente com texto (jornal antes de DFP) e siga a skill ler-publicacao, com o roteiro em
-   [references/roteiro-notas.md](references/roteiro-notas.md): um `termo` por assunto
-   do roteiro em `texto_documento`, depois o entorno com `inicio` quando o trecho não
-   basta. Se o texto vier gravado em arquivo, leia o arquivo inteiro. Item ausente só
-   depois de dois termos do assunto sem ocorrência. A publicação do ano anterior serve
-   para item que este ano só menciona (garantia da controladora, covenant), e aí você
-   diz de que ano é.
+4. Em companhia aberta, `cvm_parecer` da última DFP e da anterior, e do ITR mais recente
+   quando é posterior, antes de qualquer texto. Depois, leia texto: no índice de
+   documentos, escolha a publicação mais recente com texto (jornal antes de DFP) e siga a
+   skill ler-publicacao, com o roteiro em
+   [references/roteiro-notas.md](references/roteiro-notas.md): um `termo` por assunto do
+   roteiro em `texto_documento`, depois o entorno com `inicio` quando o trecho não basta.
+   Se o texto vier gravado em arquivo, leia o arquivo inteiro. Item ausente só depois de
+   dois termos do assunto sem ocorrência. A publicação do ano anterior serve para item
+   que este ano só menciona (garantia da controladora, covenant), e aí você diz de que
+   ano é.
 5. Escreva as seções 6 e 7 a partir do que ficou em aberto.
 6. Escreva o relatório.
 
