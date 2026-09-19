@@ -15,7 +15,7 @@ ressalvas declarar e o que responder quando o dado não existe.
 | Skill | Use quando |
 |---|---|
 | [`balancos-ai`](skills/balancos-ai/) | Base: como o MCP funciona, ferramentas, limites, vocabulário. As demais assumem esta. |
-| [`companhia-aberta`](skills/companhia-aberta/) | Empresa é S.A. aberta: consolidado, conta a conta, DFC, EBITDA, dívida líquida, parecer, reapresentação, ranking de abertas. |
+| [`companhia-aberta`](skills/companhia-aberta/) | Empresa é S.A. aberta: consolidado, conta a conta, DFC, EBITDA, dívida líquida, parecer, reapresentação, trimestre e últimos doze meses, ranking de abertas. |
 | [`instituicao-financeira`](skills/instituicao-financeira/) | Empresa é banco, cooperativa ou financeira: carteira, captações, Basileia, trimestre, conglomerado, ranking do IF.data. |
 | [`indicadores-financeiros`](skills/indicadores-financeiros/) | Precisar calcular liquidez, endividamento, margens, ROE, ROA, CAGR a partir do BP e da DRE. |
 | [`investigar-empresa`](skills/investigar-empresa/) | "Me conta sobre a empresa X", "o que sabemos da X". |
@@ -29,7 +29,7 @@ ressalvas declarar e o que responder quando o dado não existe.
 | Fonte | Tools | Quem | O que traz |
 |---|---|---|---|
 | Publicações | `buscar_empresas`, `analisar_empresa`, `texto_documento`, `ranking_empresas`... | qualquer empresa com publicação legal | BP de 8 linhas, DRE de 6, individual, texto integral das publicações |
-| CVM | `cvm_*` | companhias abertas com DFP (2010 em diante) | consolidado e individual, conta a conta com DFC e DVA, parecer do auditor, reapresentações |
+| CVM | `cvm_*` | companhias abertas: DFP (2010 em diante) e ITR (2011 em diante) | consolidado e individual, conta a conta com DFC e DVA, série trimestral com últimos doze meses, parecer do auditor, reapresentações |
 | BCB | `bcb_*` | instituições financeiras do IF.data (2000 em diante) | série trimestral, carteira, captações, Basileia, conglomerados |
 
 A skill `balancos-ai` ensina a rotear pelo CNPJ; `companhia-aberta` e
@@ -124,15 +124,18 @@ As skills são escritas em cima do que o MCP entrega hoje, e dizem isso ao usuá
 Fonte publicações:
 
 - Balanço com 8 linhas e DRE com 6, sempre da entidade individual (sem consolidado).
-- Texto de publicação em pedaços de até 200 mil caracteres ou por busca de termo; DFP da
-  CVM e relatórios do IF.data não têm texto extraído.
+- Texto de publicação em pedaços de até 200 mil caracteres ou por busca de termo; DFP e
+  ITR da CVM e relatórios do IF.data não têm texto extraído.
 - Ranking com até 50 empresas por chamada, sem filtro por faixa de receita.
 - Rótulo de setor por seção CNAE, com alguns rótulos herdados.
 
 Fonte CVM:
 
-- Só companhias abertas com DFP, de 2010 em diante; sem ITR trimestral.
-- Ranking por exercício e família, sem filtro por UF ou setor.
+- Só companhias abertas: DFP de 2010 em diante, ITR de 2011 em diante; ITR sem texto
+  nem PDF.
+- O último trimestre de cada exercício é derivado (DFP menos nove meses); em 6 a 8% dos
+  exercícios os trimestres publicados não fecham com o acumulado, e a série marca isso.
+- Ranking por exercício ou por últimos doze meses e família, sem filtro por UF ou setor.
 - Notas explicativas continuam só no texto da publicação.
 
 Fonte BCB:

@@ -25,8 +25,9 @@ dedicou metade da resposta a cláusulas contratuais.
 
 **Prompt**: "Vou vender a prazo para a Gerdau S.A.; que risco eu corro?"
 
-**Esperado**: seção 5 abre com `cvm_parecer_dfp` (tipo, firma, data, ênfase); seção 3
-com dívida bruta, caixa e caixa operacional com código; seção 4 lista as reapresentações
+**Esperado**: seção 5 abre com `cvm_parecer` da DFP (tipo, firma, data, ênfase) e diz
+se a revisão do ITR mais recente trouxe algo novo; seção 3 com dívida bruta, caixa e
+caixa operacional com código, e uma coluna com o BP do ITR e os resultados de doze meses; seção 4 lista as reapresentações
 da linha do tempo; nada de nota ou semáforo.
 
 ## Cenário novo: contraparte banco

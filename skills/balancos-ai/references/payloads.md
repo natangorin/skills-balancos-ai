@@ -50,7 +50,8 @@ documentos[]: id, tipo, publicado_em, ano_referencia, titulo, paginas, link
 total, aviso (quando há mais de 100)
 ```
 
-Tipos frequentes: "Demonstrações Financeiras Padronizadas" (DFP, CVM), "Demonstração de
+Tipos frequentes: "Demonstrações Financeiras Padronizadas" (DFP, CVM), "Informações
+Trimestrais" (ITR, CVM, título "ITR dd/mm/aaaa", três por exercício), "Demonstração de
 Resultados", "Notas Explicativas", "Ata de AGO", "Ata de AGE", "Press Release",
 "Apresentação de Resultados", "Demonstrações Contábeis Completas".
 

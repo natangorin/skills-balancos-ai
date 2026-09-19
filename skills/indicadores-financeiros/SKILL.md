@@ -5,7 +5,7 @@ license: MIT
 compatibility: Requer o MCP do Balanços.AI conectado. Assume a skill balancos-ai.
 metadata:
   author: Balanços.AI
-  version: "0.3"
+  version: "0.4"
 ---
 
 # Indicadores financeiros com o dado do Balanços.AI
@@ -29,7 +29,10 @@ Pareie BP e DRE pelo mesmo `exercicio`. Um ano sem BP ou sem DRE entra na tabela
 indicador em branco, nunca com o ano vizinho no lugar.
 
 Os mesmos nomes de campo voltam em `cvm_balancos_companhia` e `cvm_dres_companhia` (skill
-companhia-aberta), com `visao` a mais: as fórmulas valem, e o cabeçalho diz a visão.
+companhia-aberta), com `visao` a mais: as fórmulas valem, e o cabeçalho diz a visão. Na
+série trimestral (`cvm_trimestres_companhia`), o BP vem em `balanco_em_reais` e a DRE em
+`resultado.trimestre`, `resultado.acumulado` e `resultado.doze_meses`: ROE, ROA e giro
+usam `doze_meses` com o BP da mesma data, nunca o trimestre isolado.
 `bcb_resultados_instituicao` também usa esses nomes, mas com semântica de intermediação
 financeira: não aplique esta skill a banco; use a skill instituicao-financeira.
 

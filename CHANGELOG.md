@@ -5,6 +5,43 @@ corresponde à `metadata.version` `X.Y` das skills que mudaram. A seção mais r
 topo define a versão: no merge na `main`, se a tag dela não existe, a release sai sozinha. Formato inspirado em
 [Keep a Changelog](https://keepachangelog.com/pt-BR/1.1.0/).
 
+## [0.4.0] - 2026-09-19
+
+O MCP 0.4.0 passou a servir o ITR da CVM: entregas trimestrais, série trimestral com
+trimestre, acumulado e últimos doze meses, e ranking por doze meses. Quatro tools da CVM
+mudaram de nome sem alias, e as skills 0.3 chamavam os nomes antigos.
+
+### Alterado
+
+- Nomes das tools da CVM em todas as skills: `cvm_dfps_companhia` virou
+  `cvm_entregas_companhia` (com `tipo` `dfp` ou `itr`), `cvm_entrega_dfp` virou
+  `cvm_entrega`, `cvm_demonstracoes_dfp` virou `cvm_demonstracoes` e `cvm_parecer_dfp`
+  virou `cvm_parecer`. Cliente que ainda mostra os nomes antigos precisa reconectar o MCP.
+- `companhia-aberta`: seção nova "Trimestral e últimos doze meses" (dado mais recente é o
+  ITR, 12M pronto e sem soma de trimestres, `derivado`, `consistente: false`, rótulo pela
+  data de referência e exercício social fora de dezembro, conta a conta do ITR com
+  trimestre isolado e acumulado, EBITDA e dívida líquida atuais, revisão do auditor no
+  ITR); ranking com `periodo="12m"`; payloads de `cvm_trimestres_companhia`,
+  `cvm_resultados_companhia`, do bloco `trimestral` de `cvm_analisar_companhia` e do
+  ranking por doze meses.
+- `balancos-ai`: tabela das 22 tools de CVM e BCB, fonte CVM com ITR e série trimestral,
+  documento "Informações Trimestrais" no roteamento e no índice, ITR sem texto extraído,
+  dois erros comuns novos.
+- `due-diligence-financeira`: coluna com o BP do ITR e os doze meses na seção 3, revisão
+  do ITR na seção 5, trimestre inconsistente na fonte como sinal.
+- `investigar-empresa`: linha "mais recente" no memo de companhia aberta.
+- `comparar-empresas`: bloco de doze meses na mesma data de referência entre companhias
+  abertas; pares pelo ranking por doze meses.
+- `originacao-ma`: corte de receita pelo ranking por doze meses.
+- `indicadores-financeiros`: campos da série trimestral e ROE e ROA com doze meses.
+- `ler-publicacao`: ITR sem texto, como a DFP; ressalva se responde com o parecer da DFP.
+- `scripts/check.py` reconhece as 12 tools `cvm_*` do MCP 0.4.
+
+### Removido
+
+- "Sem ITR trimestral" das limitações da fonte CVM, do README e do memo de companhia
+  aberta.
+
 ## [0.3.0] - 2026-09-17
 
 O MCP 0.3.0 passou a entregar o texto integral das publicações: `texto_documento` ganhou

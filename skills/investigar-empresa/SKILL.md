@@ -5,7 +5,7 @@ license: MIT
 compatibility: Requer o MCP do Balanços.AI conectado. Assume as skills balancos-ai e indicadores-financeiros; companhia-aberta e instituicao-financeira quando a empresa está na CVM ou no BCB.
 metadata:
   author: Balanços.AI
-  version: "0.3"
+  version: "0.4"
 ---
 
 # Investigar uma empresa
@@ -28,12 +28,14 @@ que é interpretação:
    e a variação anual. Em holding, variação de ativo, PL e lucro no lugar de receita.
    Anomalias excluídas e declaradas; anomalia fora da janela vai numa linha da seção 7.
 5. **Rentabilidade e estrutura de capital**: margens, ROE, liquidez corrente,
-   endividamento e composição, com a leitura da skill indicadores-financeiros.
-   Em companhia aberta, a seção 5 acrescenta EBITDA, dívida líquida, cobertura de juros e
+   endividamento e composição, com a leitura da skill indicadores-financeiros. Em
+   companhia aberta, a seção 5 acrescenta EBITDA, dívida líquida, cobertura de juros e
    caixa operacional com o código da conta (skill companhia-aberta), e uma linha com o
-   tipo do último parecer. Em instituição financeira, as seções 3, 4 e 5 viram: tamanho
-   (ativo, carteira, captações, PL e Basileia na última data-base), trajetória (oito
-   trimestres de ativo, carteira, captações, PL e lucro semestral, com a era) e
+   tipo do último parecer; se `trimestral.mais_recente` é posterior ao último exercício,
+   as seções 3 e 4 ganham uma linha "mais recente" com a data de referência, o BP da data
+   e receita e lucro de doze meses. Em instituição financeira, as seções 3, 4 e 5 viram:
+   tamanho (ativo, carteira, captações, PL e Basileia na última data-base), trajetória
+   (oito trimestres de ativo, carteira, captações, PL e lucro semestral, com a era) e
    rentabilidade (ROE anual, crescimento de carteira, Basileia, imobilização), tudo da
    skill instituicao-financeira.
 6. **Publicações**: as 3 a 5 mais recentes com tipo, data e link; total no índice.
@@ -62,8 +64,8 @@ que é interpretação:
    link do documento.
 5. Calcule os indicadores com as fórmulas da skill indicadores-financeiros.
 6. Se o pedido incluir "o que publicou" ou "o que aconteceu", leia o texto da publicação
-   mais recente com `texto_documento` (a publicação em jornal costuma ter texto; a DFP
-   não tem): por `termo` quando o pedido tem assunto, em pedaços com `inicio` e
+   mais recente com `texto_documento` (a publicação em jornal costuma ter texto; a DFP e
+   o ITR não têm): por `termo` quando o pedido tem assunto, em pedaços com `inicio` e
    `proximo_inicio` quando é o relatório inteiro (skill ler-publicacao). Se o resultado
    vier gravado em arquivo, leia o arquivo inteiro. Cite só o que está no texto, entre
    aspas curtas, com o link.

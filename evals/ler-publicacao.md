@@ -43,7 +43,7 @@ existe; não lê o documento inteiro.
 
 **Prompt**: "Tem ressalva do auditor na DFP 2025 da Gerdau?"
 
-**Esperado**: `cvm_parecer_dfp` do `id_doc` de 2025, sem tentar `texto_documento` da DFP;
+**Esperado**: `cvm_parecer` do `id_doc` da DFP 2025, sem tentar `texto_documento` da DFP;
 tipo, firma e data; PAA não é ressalva.
 
 ## Resultados registrados

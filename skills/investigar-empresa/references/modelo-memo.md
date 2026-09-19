@@ -47,13 +47,18 @@ Substitui as seções "Natureza do dado", "Rentabilidade e estrutura de capital"
 consolidada, última versão de cada exercício. DFP de <ano> a <ano>; <n> reapresentações.
 Último parecer: <tipo> (<firma>, <data>).
 
+**Mais recente (<data de referência>, ITR, consolidado, id_doc <n>).** Receita 12M
+R$ <x> bi (<+x>% sobre os 12M de um ano antes), lucro 12M R$ <x> bi; no trimestre,
+receita R$ <x> bi contra R$ <x> bi no mesmo trimestre do ano anterior. Ativo R$ <x> bi,
+PL R$ <x> bi. <Trimestre derivado ou consistente: false, quando houver.>
+
 **Rentabilidade e estrutura de capital (<ano>, consolidado, id_doc <n>).** Margem líquida
 <x>%, ROE <x>% (3.11.01 / (2.03 − 2.03.09)), liquidez corrente <x>x, dívida bruta
 R$ <x> bi (2.01.04 + 2.02.01), dívida líquida R$ <x> bi, EBITDA R$ <x> bi
 (3.05 + |7.04.01|), dívida líquida / EBITDA <x>x, cobertura de juros <x>x
 (3.05 / |3.06.02|, inclui variação cambial), caixa operacional R$ <x> bi (6.01).
 
-**Ressalvas.** Sem ITR, valor de mercado ou notas estruturadas; notas no texto de <link>.
+**Ressalvas.** Sem valor de mercado ou notas estruturadas; notas no texto de <link>.
 <Conhecimento geral, não confirmado na base: ...>. Dados do Balanços.AI (CVM) em <data>.
 ```
 

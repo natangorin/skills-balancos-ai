@@ -5,7 +5,7 @@ license: MIT
 compatibility: Requer o MCP do Balanços.AI conectado. Assume as skills balancos-ai e indicadores-financeiros; companhia-aberta e instituicao-financeira quando as empresas estão na CVM ou no BCB.
 metadata:
   author: Balanços.AI
-  version: "0.2"
+  version: "0.4"
 ---
 
 # Comparar empresas
@@ -26,17 +26,20 @@ consolidado, operacional ou holding) e uma resposta direta por pergunta feita ("
    receita zero ou irrisória, filtre pelo `cnae_principal` da ficha quando o pedido for
    um subsetor (geração, siderurgia) e corte por escala entre um terço e três vezes o
    ativo da empresa-alvo, dizendo o corte ao leitor. Diga quantas empresas a base
-   devolveu e que o teto é 50 por chamada.
-   Se a empresa-alvo é companhia aberta, os pares abertos vêm de
-   `cvm_ranking_companhias` no exercício, com a mesma `familia` e `visao` (não há UF nem
-   setor: corte por CNAE e UF pela `ficha_empresa`, e diga). Se é instituição financeira,
-   os pares vêm de `bcb_ranking_instituicoes` com `uf`, `tipo` ou `consolidado_bancario`
-   iguais, no nível padrão.
+   devolveu e que o teto é 50 por chamada. Se a empresa-alvo é companhia aberta, os pares
+   abertos vêm de `cvm_ranking_companhias` no exercício ou com `periodo="12m"`, com a
+   mesma `familia` e `visao` (não há UF nem setor: corte por CNAE e UF pela
+   `ficha_empresa`, e diga). Se é instituição financeira, os pares vêm de
+   `bcb_ranking_instituicoes` com `uf`, `tipo` ou `consolidado_bancario` iguais, no nível
+   padrão.
 2. Retrato de cada uma, em paralelo, pela fonte que o roteamento da skill balancos-ai
    indicar: `analisar_empresa`, `cvm_analisar_companhia` ou `bcb_analisar_instituicao`.
 3. Escolha o exercício: o mais recente que **todas** têm. Se uma não tem, use o mais
    recente comum e mostre, em linha separada, o último ano de cada uma. Nunca misture anos
-   na mesma coluna sem avisar no cabeçalho.
+   na mesma coluna sem avisar no cabeçalho. Quando todas são companhias abertas, acrescente
+   um bloco "doze meses" na data de referência mais recente que todas têm
+   (`cvm_resultados_companhia` com `periodo="12m"`); exercício social diferente entre
+   elas vai no cabeçalho.
 4. Classifique a natureza de cada dado (skill balancos-ai): fonte (publicações, CVM ou
    BCB), família e visão na CVM, nível no BCB, holding ou operacional e xbrl ou llm nas
    publicações. **Na mesma tabela, mesma fonte, mesma família e mesma visão**: consolidado

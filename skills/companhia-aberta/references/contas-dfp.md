@@ -1,7 +1,7 @@
 # Mapa de contas padronizadas da DFP
 
 Códigos com `padronizada: true` no plano de contas da CVM para a família `comercial`.
-Os valores vêm em reais em `cvm_demonstracoes_dfp`. Contas abaixo do nível 3 costumam
+Os valores vêm em reais em `cvm_demonstracoes`. Os códigos são os mesmos na DFP e no ITR. Contas abaixo do nível 3 costumam
 variar por companhia (`padronizada: false`): cite código e descrição ao usá-las.
 
 ## BPA (`demonstracao="bpa"`)
